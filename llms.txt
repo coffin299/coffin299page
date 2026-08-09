@@ -7,9 +7,9 @@ coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開して�
 ## Pages
 
 - [Home](https://coffin299.net/): ブランド紹介とエントリポイント
-- [About](https://coffin299.net/pages/about.html): プロフィール、スキル、興味関心
-- [Portfolios](https://coffin299.net/pages/portfolios.html): Discord Bot / 3DCG 作品一覧
-- [Contact](https://coffin299.net/pages/contact.html): GitHub / X / Discord の連絡先
+- [About](https://coffin299.net/pages/about/): プロフィール、スキル、興味関心
+- [Portfolios](https://coffin299.net/pages/portfolios/): Discord Bot / 3DCG 作品一覧
+- [Contact](https://coffin299.net/pages/contact/): GitHub / X / Discord の連絡先
 
 ## Projects
 

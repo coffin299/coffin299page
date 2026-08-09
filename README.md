@@ -19,6 +19,7 @@ AIコーダーおよび3DCGアーティストとしてのスキルセットと�
 *   **システム準拠テーマ**: OSの `prefers-color-scheme` に追従。トグルで手動切替・保持も可能
 *   **単色フラットUI**: ページ背景はフラット。グラデーションはカード内アクセントのみ
 *   **GitHub Pages対応**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
+*   **クリーンURL**: `pages/*/index.html` 配置により `/pages/about/` のように `.html` なしで公開
 *   **SEO / LLM向け**: `sitemap.xml`、`robots.txt`、`llms.txt`、`llms-full.txt`、構造化データ
 
 ---
@@ -42,7 +43,13 @@ git clone https://github.com/coffin299/coffin299page.git
 cd coffin299page
 ```
 
-`index.html` をブラウザで開きます。
+ローカルでは静的サーバー推奨（ディレクトリURLのため）:
+
+```bash
+npx serve .
+```
+
+公開後のURL例: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`（`.html` なし）
 
 ### GitHub Pages
 

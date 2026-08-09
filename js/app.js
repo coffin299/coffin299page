@@ -127,18 +127,26 @@ class NavigationManager {
     }
 
     setActiveLinkByCurrentPage() {
-        const path = window.location.pathname;
-        const currentPage = path.split('/').pop() || 'index.html';
+        // クリーンURL（/pages/about/）対応でパスからセクション判定
+        const path = window.location.pathname.replace(/\/index\.html?$/, '/');
+        let section = 'home';
+        if (path.includes('/pages/about')) {
+            section = 'about';
+        } else if (path.includes('/pages/portfolios')) {
+            section = 'portfolios';
+        } else if (path.includes('/pages/contact')) {
+            section = 'contact';
+        }
+
         this.navLinks.forEach((link) => {
             link.classList.remove('active');
             const href = link.getAttribute('href') || '';
-            const hrefPage = href.split('/').pop();
-            if (
-                hrefPage === currentPage ||
-                (currentPage === '' && hrefPage === 'index.html') ||
-                (currentPage === 'index.html' && hrefPage === 'index.html') ||
-                (path.includes('/about') && href.includes('about'))
-            ) {
+            const matches =
+                (section === 'about' && href.includes('about')) ||
+                (section === 'portfolios' && href.includes('portfolios')) ||
+                (section === 'contact' && href.includes('contact')) ||
+                (section === 'home' && !href.includes('about') && !href.includes('portfolios') && !href.includes('contact'));
+            if (matches) {
                 link.classList.add('active');
             }
         });
