@@ -1,37 +1,16 @@
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
+Allow: /photos/
+Allow: /styles/
+Allow: /js/
 
-# Sitemap location
-Sitemap: https://coffin399.github.io/coffin299page/sitemap.xml
-
-# Crawl-delay for respectful crawling
-Crawl-delay: 1
-
-# Allow all major search engines
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Slurp
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-# Block access to sensitive files
-Disallow: /js/
-Disallow: /styles/
-Disallow: /photos/
-Disallow: /scripts/
+# 内部・ビルド関連のみ除外
 Disallow: /.git/
 Disallow: /.github/
+Disallow: /scripts/
 Disallow: /requirements.txt
-Disallow: /README.md
+
+Sitemap: https://coffin299.net/sitemap.xml

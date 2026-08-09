@@ -3,96 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About coffin299 - AIプログラマー & 3DCGアーティスト | プロフィール</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="coffin299（ごみぃ）のプロフィールページ。AI技術を活用したプログラミング、3DCGアニメーション制作、Discord Bot開発のスキルと経験を紹介。">
-    <meta name="keywords" content="coffin299, ごみぃ, プロフィール, AIプログラマー, 3DCGアーティスト, スキル, 経験, Python, JavaScript, Java, C#, MMD, Unity, LLM, Discord Bot">
+    <title>About coffin299 - AIプログラマー &amp; 3DCGアーティスト | プロフィール</title>
+
+    <meta name="description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作、Discord Bot開発のスキルと経験を紹介。">
+    <meta name="keywords" content="coffin299, ごみぃ, プロフィール, AIプログラマー, 3DCGアーティスト, Python, JavaScript, MMD, Unity, LLM">
     <meta name="author" content="coffin299">
     <meta name="robots" content="index, follow">
-    <meta name="canonical" href="https://coffin399.github.io/coffin299page/pages/about.html">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="About coffin299 - AIプログラマー & 3DCGアーティスト">
-    <meta property="og:description" content="coffin299（ごみぃ）のプロフィールページ。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
-    <meta property="og:url" content="https://coffin399.github.io/coffin299page/pages/about.html">
+    <meta name="theme-color" content="#0aa2b5">
+    <link rel="canonical" href="https://coffin299.net/pages/about.html">
+
+    <meta property="og:title" content="About coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta property="og:description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
+    <meta property="og:url" content="https://coffin299.net/pages/about.html">
     <meta property="og:type" content="profile">
-    <meta property="og:image" content="https://coffin399.github.io/coffin299page/photos/OPG.png">
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="About coffin299 - AIプログラマー & 3DCGアーティスト">
-    <meta name="twitter:description" content="coffin299（ごみぃ）のプロフィールページ。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
-    <meta name="twitter:image" content="https://coffin399.github.io/coffin299page/photos/OPG.png">
-    <!-- ダークモード初期化スクリプト - フラッシュ防止 -->
+    <meta property="og:image" content="https://coffin299.net/photos/OPG.png">
+    <meta property="og:site_name" content="coffin299 Portfolio">
+    <meta property="og:locale" content="ja_JP">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta name="twitter:description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
+    <meta name="twitter:image" content="https://coffin299.net/photos/OPG.png">
+    <meta name="twitter:creator" content="@coffin299">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "About coffin299",
+        "url": "https://coffin299.net/pages/about.html",
+        "isPartOf": { "@type": "WebSite", "url": "https://coffin299.net/", "name": "coffin299 Portfolio" },
+        "mainEntity": {
+            "@type": "Person",
+            "name": "coffin299",
+            "alternateName": "ごみぃ",
+            "url": "https://coffin299.net/",
+            "sameAs": [
+                "https://github.com/coffin299",
+                "https://x.com/coffin299"
+            ]
+        }
+    }
+    </script>
+
     <script>
-        (function() {
-            const theme = localStorage.getItem('theme') || 'dark';
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- ダークモード切り替えボタン -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="テーマ切り替え">
-        <i class="fas fa-moon" id="theme-icon"></i>
-    </button>
+    <header class="site-header">
+        <a class="brand-mark" href="../index.html">coffin<span>299</span></a>
+        <div class="header-actions">
+            <nav class="nav-container" aria-label="メインナビ">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                    <li><a href="portfolios.html" class="nav-link">Portfolios</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="テーマ切り替え">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+        </div>
+    </header>
 
-    <!-- ナビゲーション -->
-    <nav class="nav-container">
-        <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link">Home</a></li>
-            <li><a href="about.html" class="nav-link active">About</a></li>
-            <li><a href="portfolios.html" class="nav-link">Portfolios</a></li>
-            <li><a href="contact.html" class="nav-link">Contact</a></li>
-        </ul>
-    </nav>
+    <main class="page-main">
+        <div class="page-wrap">
+            <header class="page-header" data-reveal>
+                <p class="page-kicker">About</p>
+                <h1 class="page-title">coffin299</h1>
+                <p class="page-subtitle">AIプログラマー &amp; 3DCGアーティスト</p>
+            </header>
 
-    <!-- メインコンテンツ -->
-    <main class="about-main">
-        <div class="about-container">
-            <!-- プロフィールセクション -->
-            <section class="profile-section">
-                <div class="profile-card">
-                    <img src="../photos/coffin299.gif" alt="coffin299" class="profile-image">
-                    <div class="profile-info">
-                        <h1 class="profile-name">coffin299 (ごみぃ)</h1>
-                        <p class="profile-title">AIプログラマー & 3DCGアーティスト</p>
-                        <div class="social-links">
-                            <a href="https://github.com/coffin399" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://x.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                        </div>
+            <section class="profile-block" data-reveal>
+                <img src="../photos/coffin299.gif" alt="coffin299" class="profile-image">
+                <div>
+                    <h2 class="profile-name">coffin299 (ごみぃ)</h2>
+                    <p class="profile-title">AIプログラマー &amp; 3DCGアーティスト</p>
+                    <div class="social-links">
+                        <a href="https://github.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://x.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="X">
+                            <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
                 </div>
             </section>
 
-            <!-- 自己紹介セクション -->
-            <section class="intro-section">
+            <section data-reveal>
                 <h2 class="section-title">About Me</h2>
-                <div class="intro-content">
-                    <p class="intro-text">
-                        日々のゲーム体験と日常から生まれる「コレがあったらいいな」のアイデアをLLMを駆使して形にするのが得意です。
-                        プログラミングと3DCGの両方に興味を持ち、新しい技術を学ぶことを楽しんでいます。
-                    </p>
-                </div>
+                <p class="intro-text">
+                    日々のゲーム体験と日常から生まれる「コレがあったらいいな」のアイデアをLLMを駆使して形にするのが得意です。
+                    プログラミングと3DCGの両方に興味を持ち、新しい技術を学ぶことを楽しんでいます。
+                </p>
             </section>
 
-            <!-- スキルセクション -->
-            <section class="skills-section">
+            <section data-reveal>
                 <h2 class="section-title">Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-code"></i>
-                            プログラミング
-                        </h3>
+                        <h3 class="category-title"><i class="fas fa-code"></i> プログラミング</h3>
                         <div class="skill-tags">
                             <span class="skill-tag">Java</span>
                             <span class="skill-tag">C#</span>
@@ -103,20 +125,14 @@
                         </div>
                     </div>
                     <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-cube"></i>
-                            3DCG
-                        </h3>
+                        <h3 class="category-title"><i class="fas fa-cube"></i> 3DCG</h3>
                         <div class="skill-tags">
                             <span class="skill-tag">MMD</span>
                             <span class="skill-tag">Unity</span>
                         </div>
                     </div>
                     <div class="skill-category">
-                        <h3 class="category-title">
-                            <i class="fas fa-robot"></i>
-                            AI・機械学習
-                        </h3>
+                        <h3 class="category-title"><i class="fas fa-robot"></i> AI・機械学習</h3>
                         <div class="skill-tags">
                             <span class="skill-tag">LLM</span>
                             <span class="skill-tag">Discord Bot</span>
@@ -126,28 +142,21 @@
                 </div>
             </section>
 
-            <!-- 趣味・興味セクション -->
-            <section class="interests-section">
-                <h2 class="section-title">Interests & Hobbies</h2>
+            <section data-reveal>
+                <h2 class="section-title">Interests</h2>
                 <div class="interests-grid">
                     <div class="interest-card">
-                        <div class="interest-icon">
-                            <i class="fas fa-gamepad"></i>
-                        </div>
+                        <div class="interest-icon"><i class="fas fa-gamepad"></i></div>
                         <h3>ゲーム</h3>
                         <p>様々なジャンルのゲームをプレイし、3DCG制作のインスピレーションを得ています。</p>
                     </div>
                     <div class="interest-card">
-                        <div class="interest-icon">
-                            <i class="fas fa-music"></i>
-                        </div>
+                        <div class="interest-icon"><i class="fas fa-music"></i></div>
                         <h3>音楽</h3>
                         <p>音楽を聴くことが好きで、Discord Botでの音楽再生システムも開発しています。</p>
                     </div>
                     <div class="interest-card">
-                        <div class="interest-icon">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
+                        <div class="interest-icon"><i class="fas fa-lightbulb"></i></div>
                         <h3>アイデア実現</h3>
                         <p>日常の「あったらいいな」をAI技術を使って実際に形にすることが趣味です。</p>
                     </div>

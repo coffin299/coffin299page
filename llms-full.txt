@@ -1,0 +1,79 @@
+# coffin299 — Full summary
+
+> AIプログラマー & 3DCGアーティスト coffin299（ごみぃ）のポートフォリオ全文要約。
+
+## Identity
+
+- Name: coffin299（ごみぃ）
+- Roles: AIプログラマー、3DCGアーティスト
+- Site: https://coffin299.net/
+- GitHub: https://github.com/coffin299
+- X: https://x.com/coffin299
+- YouTube: https://www.youtube.com/@coffin2999
+
+## About
+
+日々のゲーム体験と日常から生まれる「コレがあったらいいな」のアイデアをLLMを駆使して形にするのが得意。
+プログラミングと3DCGの両方に興味を持ち、新しい技術を学ぶことを楽しんでいる。
+
+### Skills
+
+- Programming: Java, C#, Python, JavaScript, HTML, CSS
+- 3DCG: MMD, Unity
+- AI: LLM, Discord Bot, API Integration
+
+### Interests
+
+- ゲーム（3DCG制作のインスピレーション）
+- 音楽（Discord音楽Bot開発）
+- アイデア実現（日常の課題をAIで形にする）
+
+## Portfolios
+
+### MOMOKA (main)
+
+オールインワン Discord Bot。AIチャット、音楽再生、画像生成、TTS、ゲーム統計、リアルタイム通知を統合。
+マルチプロバイダー LLM（OpenAI / Gemini / NVIDIA NIM / KoboldCPP）と自動フェイルオーバーを備える。
+- GitHub: https://github.com/coffin299/ProjectMOMOKA
+- Website: https://momoka-project.com/
+
+### PLANA
+
+Discord上のLLM対話システム。音楽再生、ユーティリティ、レクリエーション機能付き。
+- GitHub: https://github.com/coffin299/llmcord-JP-plana
+
+### ARONA
+
+簡易 Discord 音楽再生 Bot。
+- GitHub: https://github.com/coffin299/music-bot-arona
+
+### MedicationManagement
+
+Discord向け服薬管理システム。
+- GitHub: https://github.com/coffin299/MedicationManagement
+
+### Pokemon Legends Z-A Automation Tool
+
+Nintendo Switch向け自動化ツール。Ubuntu対応。
+- GitHub: https://github.com/coffin299/pokemon_legends_z-a_automation_tool
+
+### Discord Bot Spam Blocker
+
+スパム自動検出・フィルタリング Bot。
+- GitHub: https://github.com/coffin299/discord-bot-spam-blocker
+
+### Discord Chat Viewer for OBS
+
+OBS Studio用 Discord チャット表示ツール。
+- GitHub: https://github.com/coffin299/Discord-Chat-Viewer-for-OBS
+
+### 3DCG / MMD
+
+MikuMikuDanceを使ったキャラクターアニメーション作品。
+- YouTube: https://www.youtube.com/@coffin2999
+
+## Contact
+
+- GitHub: https://github.com/coffin299
+- X: https://x.com/coffin299
+- Discord: https://discord.com/users/270446628622696449

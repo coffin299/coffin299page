@@ -1,0 +1,30 @@
+# coffin299
+
+> AIプログラマー & 3DCGアーティスト。LLMを活用したDiscord Bot開発とMMDアニメーション制作のポートフォリオ。
+
+coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開しています。正規URLは https://coffin299.net/ です。
+
+## Pages
+
+- [Home](https://coffin299.net/): ブランド紹介とエントリポイント
+- [About](https://coffin299.net/pages/about.html): プロフィール、スキル、興味関心
+- [Portfolios](https://coffin299.net/pages/portfolios.html): Discord Bot / 3DCG 作品一覧
+- [Contact](https://coffin299.net/pages/contact.html): GitHub / X / Discord の連絡先
+
+## Projects
+
+- [MOMOKA](https://github.com/coffin299/ProjectMOMOKA): オールインワン Discord Bot（LLM、音楽、画像生成、TTS）
+- [PLANA](https://github.com/coffin299/llmcord-JP-plana): LLM対話と多機能ユーティリティ Bot
+- [ARONA](https://github.com/coffin299/music-bot-arona): 簡易 Discord 音楽 Bot
+- [MedicationManagement](https://github.com/coffin299/MedicationManagement): Discord 向け服薬管理
+- [Pokemon Legends Z-A Automation Tool](https://github.com/coffin299/pokemon_legends_z-a_automation_tool): Switch 向け自動化ツール
+- [Discord Bot Spam Blocker](https://github.com/coffin299/discord-bot-spam-blocker): スパム対策 Bot
+- [Discord Chat Viewer for OBS](https://github.com/coffin299/Discord-Chat-Viewer-for-OBS): OBS 用チャット表示
+
+## Optional
+
+- [Full site summary](https://coffin299.net/llms-full.txt): サイト内容の要約テキスト
+- [Sitemap](https://coffin299.net/sitemap.xml): 検索エンジン向けサイトマップ
+- [GitHub](https://github.com/coffin299): ソースコード
+- [X](https://x.com/coffin299): 開発・制作の投稿
+- [YouTube](https://www.youtube.com/@coffin2999): 3DCG / MMD 作品

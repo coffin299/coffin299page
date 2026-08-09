@@ -3,131 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolios coffin299 - AIプログラマー & 3DCGアーティスト | 作品集</title>
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="coffin299（ごみぃ）の作品集ページ。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。PLANA、ARONA、Pokemon Legends Z-A Automation Toolなど。">
-    <meta name="keywords" content="coffin299, ごみぃ, 作品集, ポートフォリオ, Discord Bot, PLANA, ARONA, Pokemon Legends Z-A, 3DCG, MMD, AI技術, LLM, Python, Unity, プロジェクト">
+    <title>Portfolios coffin299 - AIプログラマー &amp; 3DCGアーティスト | 作品集</title>
+
+    <meta name="description" content="coffin299（ごみぃ）の作品集。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
+    <meta name="keywords" content="coffin299, ごみぃ, 作品集, Discord Bot, MOMOKA, PLANA, ARONA, 3DCG, MMD">
     <meta name="author" content="coffin299">
     <meta name="robots" content="index, follow">
-    <meta name="canonical" href="https://coffin399.github.io/coffin299page/pages/portfolios.html">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="Portfolios coffin299 - AIプログラマー & 3DCGアーティスト">
-    <meta property="og:description" content="coffin299（ごみぃ）の作品集ページ。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
-    <meta property="og:url" content="https://coffin399.github.io/coffin299page/pages/portfolios.html">
+    <meta name="theme-color" content="#0aa2b5">
+    <link rel="canonical" href="https://coffin299.net/pages/portfolios.html">
+
+    <meta property="og:title" content="Portfolios coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta property="og:description" content="coffin299（ごみぃ）の作品集。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
+    <meta property="og:url" content="https://coffin299.net/pages/portfolios.html">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://coffin399.github.io/coffin299page/photos/OPG.png">
-    
-    <!-- Twitter -->
+    <meta property="og:image" content="https://coffin299.net/photos/OPG.png">
+    <meta property="og:site_name" content="coffin299 Portfolio">
+    <meta property="og:locale" content="ja_JP">
+
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Portfolios coffin299 - AIプログラマー & 3DCGアーティスト">
-    <meta name="twitter:description" content="coffin299（ごみぃ）の作品集ページ。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
-    <meta name="twitter:image" content="https://coffin399.github.io/coffin299page/photos/OPG.png">
-    <!-- ダークモード初期化スクリプト - フラッシュ防止 -->
+    <meta name="twitter:title" content="Portfolios coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta name="twitter:description" content="coffin299（ごみぃ）の作品集。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
+    <meta name="twitter:image" content="https://coffin299.net/photos/OPG.png">
+    <meta name="twitter:creator" content="@coffin299">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Portfolios coffin299",
+        "url": "https://coffin299.net/pages/portfolios.html",
+        "isPartOf": { "@type": "WebSite", "url": "https://coffin299.net/", "name": "coffin299 Portfolio" }
+    }
+    </script>
+
     <script>
-        (function() {
-            const theme = localStorage.getItem('theme') || 'dark';
+        (function () {
+            var saved = localStorage.getItem('theme');
+            var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
             document.documentElement.setAttribute('data-theme', theme);
         })();
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel="stylesheet" href="../styles/portfolios.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- ダークモード切り替えボタン -->
-    <button id="theme-toggle" class="theme-toggle" aria-label="テーマ切り替え">
-        <i class="fas fa-moon" id="theme-icon"></i>
-    </button>
+    <header class="site-header">
+        <a class="brand-mark" href="../index.html">coffin<span>299</span></a>
+        <div class="header-actions">
+            <nav class="nav-container" aria-label="メインナビ">
+                <ul class="nav-links">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="portfolios.html" class="nav-link active">Portfolios</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="テーマ切り替え">
+                <i class="fas fa-moon" id="theme-icon"></i>
+            </button>
+        </div>
+    </header>
 
-    <!-- ナビゲーション -->
-    <nav class="nav-container">
-        <ul class="nav-links">
-            <li><a href="../index.html" class="nav-link">Home</a></li>
-            <li><a href="about.html" class="nav-link">About</a></li>
-            <li><a href="portfolios.html" class="nav-link active">Portfolios</a></li>
-            <li><a href="contact.html" class="nav-link">Contact</a></li>
-        </ul>
-    </nav>
+    <main class="page-main">
+        <div class="page-wrap">
+            <header class="page-header" data-reveal>
+                <p class="page-kicker">Portfolios</p>
+                <h1 class="page-title">Selected work</h1>
+                <p class="page-subtitle">AI技術を活用したプロジェクトと3DCG作品</p>
+            </header>
 
-    <!-- メインコンテンツ -->
-    <main class="portfolios-main">
-        <div class="portfolios-container">
-            <!-- ヘッダーセクション -->
-            <section class="portfolios-header">
-                <h1 class="page-title">My Portfolios</h1>
-                <p class="page-subtitle">AI技術を活用したプロジェクトと3DCG作品を紹介します</p>
-            </section>
-
-            <!-- プロジェクトセクション -->
-            <section class="projects-section">
+            <section class="projects-section" data-reveal>
                 <h2 class="section-title">Discord Bot Projects</h2>
                 <div class="projects-grid">
-                    <!-- MOMOKA Project - Main Project -->
                     <div class="project-card project-card-main">
                         <div class="project-header">
-                            <div class="project-icon project-icon-main">
-                                <i class="fas fa-star"></i>
-                            </div>
+                            <div class="project-icon project-icon-main"><i class="fas fa-star"></i></div>
                             <div class="project-info">
+                                <div class="project-badge">Main</div>
                                 <h3 class="project-title project-title-main">MOMOKA</h3>
-                                <div class="project-badge">メインプロジェクト</div>
                                 <div class="project-tags">
                                     <span class="tag">LLM</span>
                                     <span class="tag">Discord Bot</span>
                                     <span class="tag">Python</span>
-                                    <span class="tag">AI Chat</span>
                                     <span class="tag">Music</span>
-                                    <span class="tag">Image Generation</span>
                                     <span class="tag">TTS</span>
-                                    <span class="tag">Multi-Provider</span>
                                 </div>
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description project-description-main">
-                                MOMOKAは、AIチャット、音楽再生、画像生成、テキスト読み上げ、ゲーム統計、リアルタイム通知など、すべての機能を統合したオールインワンDiscord Botです。マルチプロバイダーLLMサポート（OpenAI GPT-4、Google Gemini、NVIDIA NIM、KoboldCPP）による自動フェイルオーバー機能を搭載し、高可用性を実現しています。
+                            <p class="project-description">
+                                AIチャット、音楽再生、画像生成、テキスト読み上げ、ゲーム統計、リアルタイム通知などを統合したオールインワン Discord Bot。
+                                マルチプロバイダー LLM サポートによる自動フェイルオーバーで高可用性を実現。
                             </p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <div class="features-grid">
                                     <ul>
-                                        <li>🤖 マルチプロバイダーAIチャット（GPT-4、Gemini、NIM、KoboldCPP）</li>
-                                        <li>🔄 自動APIキーローテーション</li>
-                                        <li>💬 会話管理とメモリシステム</li>
-                                        <li>🎵 キューベース音楽プレーヤー（YouTube、Spotify、Google Drive対応）</li>
-                                        <li>🎨 Stable Diffusion画像生成</li>
-                                        <li>🗣️ Style-Bert-VITS2音声合成</li>
-                                        <li>📊 ゲーム統計追跡（R6S、VALORANT）</li>
-                                        <li>🔔 リアルタイム通知（地震警報、Twitch配信監視）</li>
-                                        <li>🎲 ユーティリティコマンド（サイコロ、タイマー、メディアダウンロード）</li>
-                                        <li>⚙️ 設定駆動型アーキテクチャ</li>
+                                        <li>マルチプロバイダーAIチャット</li>
+                                        <li>自動APIキーローテーション</li>
+                                        <li>会話管理とメモリ</li>
+                                        <li>キューベース音楽プレーヤー</li>
+                                        <li>Stable Diffusion画像生成</li>
+                                        <li>Style-Bert-VITS2音声合成</li>
+                                        <li>ゲーム統計追跡</li>
+                                        <li>地震警報・Twitch監視</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/ProjectMOMOKA" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/ProjectMOMOKA" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/ProjectMOMOKA" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/ProjectMOMOKA" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
                             <a href="https://momoka-project.com/" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- PLANA Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-robot"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">PLANA</h3>
                                 <div class="project-tags">
@@ -138,9 +141,7 @@
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                Discord上におけるLLMとの対話システム。その他音楽再生システムやユーティリティコマンド、レクリエーションなど多機能なボットです。
-                            </p>
+                            <p class="project-description">Discord上のLLM対話システム。音楽再生、ユーティリティ、レクリエーション機能を備えた多機能ボット。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
@@ -152,27 +153,21 @@
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/llmcord-JP-plana" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- ARONA Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-music"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-music"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">ARONA</h3>
                                 <div class="project-tags">
@@ -183,9 +178,7 @@
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                Discord上における簡易的な音楽再生システム。シンプルで使いやすい音楽ボットです。
-                            </p>
+                            <p class="project-description">Discord上の簡易音楽再生システム。シンプルで使いやすい音楽ボット。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
@@ -197,27 +190,21 @@
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/music-bot-arona" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- MedicationManagement Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-pills"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-pills"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">MedicationManagement</h3>
                                 <div class="project-tags">
@@ -228,9 +215,7 @@
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                Discord上における、誰でも簡単に操作できる服薬管理システム。健康管理をサポートします。
-                            </p>
+                            <p class="project-description">誰でも簡単に操作できるDiscord向け服薬管理システム。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
@@ -242,74 +227,58 @@
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/MedicationManagement" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- Pokemon Legends Z-A Automation Tool Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-gamepad"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">Pokemon Legends Z-A Automation Tool</h3>
                                 <div class="project-tags">
                                     <span class="tag">Automation</span>
                                     <span class="tag">Nintendo Switch</span>
                                     <span class="tag">Python</span>
-                                    <span class="tag">Ubuntu</span>
                                 </div>
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                Nintendo Switch用の自動化ツール。Pokemon Legends Z-Aでの効率的なゲームプレイをサポートします。Ubuntuに対応しています。
-                            </p>
+                            <p class="project-description">Nintendo Switch向け自動化ツール。Pokemon Legends Z-A の効率的なプレイをサポート。Ubuntu対応。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
                                     <li>ZL+Aボタンの自動化</li>
                                     <li>Bluetooth接続管理</li>
                                     <li>マクロ実行システム</li>
-                                    <li>安全な使用ガイドライン</li>
                                     <li>Ubuntu Linux対応</li>
                                 </ul>
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/pokemon_legends_z-a_automation_tool" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- Discord Bot Spam Blocker Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">Discord Bot Spam Blocker</h3>
                                 <div class="project-tags">
@@ -320,9 +289,7 @@
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                Discordサーバーをスパムから保護するためのボット。自動検出とフィルタリング機能を提供します。
-                            </p>
+                            <p class="project-description">Discordサーバーをスパムから保護するボット。自動検出とフィルタリングを提供。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
@@ -334,27 +301,21 @@
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/discord-bot-spam-blocker" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
 
-                    <!-- Discord Chat Viewer for OBS Project -->
                     <div class="project-card">
                         <div class="project-header">
-                            <div class="project-icon">
-                                <i class="fas fa-video"></i>
-                            </div>
+                            <div class="project-icon"><i class="fas fa-video"></i></div>
                             <div class="project-info">
                                 <h3 class="project-title">Discord Chat Viewer for OBS</h3>
                                 <div class="project-tags">
@@ -365,9 +326,7 @@
                             </div>
                         </div>
                         <div class="project-content">
-                            <p class="project-description">
-                                OBS Studio用のDiscordチャット表示ツール。ストリーミング時にDiscordチャットを画面に表示できます。
-                            </p>
+                            <p class="project-description">OBS Studio用のDiscordチャット表示ツール。配信画面にチャットを重ねて表示。</p>
                             <div class="project-features">
                                 <h4>主な機能</h4>
                                 <ul>
@@ -379,110 +338,73 @@
                             </div>
                         </div>
                         <div class="project-footer">
-                            <a href="https://github.com/coffin399/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fab fa-github"></i>
-                                View on GitHub
+                            <a href="https://github.com/coffin299/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
                             </a>
-                            <a href="https://deepwiki.com/coffin399/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-brain"></i>
-                                Ask DeepWiki
+                            <a href="https://deepwiki.com/coffin299/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-book"></i> DeepWiki
                             </a>
-                            <a href="https://coffin399.github.io/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                View on Website
+                            <a href="https://coffin299.github.io/Discord-Chat-Viewer-for-OBS" target="_blank" rel="noopener noreferrer" class="project-link">
+                                <i class="fas fa-globe"></i> Website
                             </a>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 3DCG作品セクション -->
-            <section class="cg-section">
+            <section class="cg-section" data-reveal>
                 <h2 class="section-title">3DCG Works</h2>
-                    <div class="cg-grid">
-                        <a href="https://www.youtube.com/@coffin2999" target="_blank" rel="noopener noreferrer" class="cg-card-link">
-                            <div class="cg-card">
-                                <div class="cg-preview">
-                                    <video autoplay muted loop playsinline class="cg-image">
-                                        <source src="../photos/coffin299.gif" type="image/gif">
-                                        <source src="../photos/akitaken.mp4" type="video/mp4">
-                                        お使いのブラウザは動画タグをサポートしていません。
-                                    </video>
-                                    <div class="cg-overlay">
-                                        <div class="cg-info">
-                                            <h3>MMD作品</h3>
-                                            <p>MikuMikuDanceを使用した3DCGアニメーション作品</p>
-                                            <div class="youtube-link-hint">
-                                                <i class="fab fa-youtube"></i>
-                                                YouTubeで見る
-                                            </div>
+                <div class="cg-grid">
+                    <a href="https://www.youtube.com/@coffin2999" target="_blank" rel="noopener noreferrer" class="cg-card-link">
+                        <div class="cg-card">
+                            <div class="cg-preview">
+                                <video autoplay muted loop playsinline class="cg-image">
+                                    <source src="../photos/akitaken.mp4" type="video/mp4">
+                                </video>
+                                <div class="cg-overlay">
+                                    <div class="cg-info">
+                                        <h3>MMD作品</h3>
+                                        <p>MikuMikuDanceを使用した3DCGアニメーション</p>
+                                        <div class="youtube-link-hint">
+                                            <i class="fab fa-youtube"></i>
+                                            YouTubeで見る
                                         </div>
                                     </div>
                                 </div>
-                                <div class="cg-details">
-                                    <h4>MMD Animation</h4>
-                                    <p>キャラクターアニメーションとエフェクトを組み合わせた作品</p>
-                                    <div class="cg-tags">
-                                        <span class="tag">MMD</span>
-                                        <span class="tag">Animation</span>
-                                        <span class="tag">3DCG</span>
-                                    </div>
+                            </div>
+                            <div class="cg-details">
+                                <h4>MMD Animation</h4>
+                                <p>キャラクターアニメーションとエフェクトを組み合わせた作品</p>
+                                <div class="cg-tags">
+                                    <span class="tag">MMD</span>
+                                    <span class="tag">Animation</span>
+                                    <span class="tag">3DCG</span>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
+                </div>
             </section>
 
-            <!-- 技術スタックセクション -->
-            <section class="tech-stack-section">
+            <section class="tech-stack-section" data-reveal>
                 <h2 class="section-title">Technology Stack</h2>
                 <div class="tech-grid">
                     <div class="tech-category">
-                        <h3 class="tech-title">
-                            <i class="fas fa-code"></i>
-                            Programming Languages
-                        </h3>
+                        <h3 class="tech-title"><i class="fas fa-code"></i> Languages</h3>
                         <div class="tech-items">
-                            <div class="tech-item">
-                                <i class="fab fa-python"></i>
-                                <span>Python</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fab fa-js-square"></i>
-                                <span>JavaScript</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fab fa-java"></i>
-                                <span>Java</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-code"></i>
-                                <span>C#</span>
-                            </div>
+                            <div class="tech-item"><i class="fab fa-python"></i><span>Python</span></div>
+                            <div class="tech-item"><i class="fab fa-js-square"></i><span>JavaScript</span></div>
+                            <div class="tech-item"><i class="fab fa-java"></i><span>Java</span></div>
+                            <div class="tech-item"><i class="fas fa-code"></i><span>C#</span></div>
                         </div>
                     </div>
                     <div class="tech-category">
-                        <h3 class="tech-title">
-                            <i class="fas fa-tools"></i>
-                            Tools & Frameworks
-                        </h3>
+                        <h3 class="tech-title"><i class="fas fa-tools"></i> Tools</h3>
                         <div class="tech-items">
-                            <div class="tech-item">
-                                <i class="fab fa-discord"></i>
-                                <span>Discord.py</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-cube"></i>
-                                <span>Unity</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fas fa-paint-brush"></i>
-                                <span>MMD</span>
-                            </div>
-                            <div class="tech-item">
-                                <i class="fab fa-git-alt"></i>
-                                <span>Git</span>
-                            </div>
+                            <div class="tech-item"><i class="fab fa-discord"></i><span>Discord.py</span></div>
+                            <div class="tech-item"><i class="fas fa-cube"></i><span>Unity</span></div>
+                            <div class="tech-item"><i class="fas fa-paint-brush"></i><span>MMD</span></div>
+                            <div class="tech-item"><i class="fab fa-git-alt"></i><span>Git</span></div>
                         </div>
                     </div>
                 </div>

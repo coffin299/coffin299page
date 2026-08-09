@@ -1,99 +1,98 @@
-// Theme management
+// テーマ管理: システム準拠 + 手動トグル
 class ThemeManager {
     constructor() {
+        // 現在テーマを初期判定から取得
+        this.currentTheme = this.getInitialTheme();
         this.themeToggle = null;
         this.themeIcon = null;
-        this.currentTheme = this.getInitialTheme();
-        
-        // DOM要素の取得を遅延させる
         this.init();
     }
 
+    getSystemTheme() {
+        // OS の prefers-color-scheme を参照
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    }
+
     getInitialTheme() {
-        // ローカルストレージに保存されたテーマがある場合はそれを使用
+        // 手動選択があれば優先、なければシステム準拠
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
+        if (savedTheme === 'dark' || savedTheme === 'light') {
             return savedTheme;
         }
-        
-        // デフォルトでダークモードを使用
-        return 'dark';
+        return this.getSystemTheme();
     }
 
     init() {
-        // DOM要素を再取得
         this.themeToggle = document.getElementById('theme-toggle');
         this.themeIcon = document.getElementById('theme-icon');
-        
-        // テーマを設定
-        this.setTheme(this.currentTheme);
-        
-        // イベントリスナーを設定
+        this.setTheme(this.currentTheme, false);
         this.setupEventListeners();
         this.setupSystemThemeListener();
         this.setupStorageListener();
-        
-        // デバッグ用ログ
-        console.log('ThemeManager initialized', {
-            toggle: !!this.themeToggle,
-            icon: !!this.themeIcon,
-            theme: this.currentTheme
-        });
     }
 
     setupSystemThemeListener() {
-        // システムのテーマ設定が変更された時のリスナー
-        if (window.matchMedia) {
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                // ユーザーが手動でテーマを変更していない場合のみ、システム設定に従う
-                if (!localStorage.getItem('theme')) {
-                    // デフォルトはダークモードなので、システムがライトモードの場合のみライトモードに変更
-                    this.setTheme(e.matches ? 'dark' : 'light');
-                }
-            });
+        // 手動未選択時のみ OS 変更に追従
+        if (!window.matchMedia) {
+            return;
         }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                this.setTheme(e.matches ? 'dark' : 'light', false);
+            }
+        });
     }
 
     setupEventListeners() {
-        if (this.themeToggle) {
-            this.themeToggle.addEventListener('click', () => {
-                this.toggleTheme();
-            });
+        if (!this.themeToggle) {
+            return;
         }
+        this.themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+        });
     }
 
-    setTheme(theme) {
+    setTheme(theme, persist) {
+        // data-theme を適用
         document.documentElement.setAttribute('data-theme', theme);
         this.currentTheme = theme;
-        localStorage.setItem('theme', theme);
-        
+
+        // 明示トグル時のみ localStorage に保存
+        if (persist) {
+            localStorage.setItem('theme', theme);
+        }
+
+        // アイコン更新（ダーク時は太陽、ライト時は月）
         if (this.themeIcon) {
             this.themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
-        
-        // テーマ変更を他のタブに通知
-        this.notifyThemeChange(theme);
+
+        this.notifyThemeChange();
     }
 
     toggleTheme() {
         const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        this.setTheme(newTheme);
+        this.setTheme(newTheme, true);
     }
 
-    notifyThemeChange(theme) {
-        // 他のタブにテーマ変更を通知
+    notifyThemeChange() {
+        // 他タブへ変更を通知
         if (typeof Storage !== 'undefined') {
             localStorage.setItem('theme-changed', Date.now().toString());
         }
     }
 
     setupStorageListener() {
-        // 他のタブからのテーマ変更を監視
         window.addEventListener('storage', (e) => {
-            if (e.key === 'theme-changed') {
+            if (e.key === 'theme' || e.key === 'theme-changed') {
                 const savedTheme = localStorage.getItem('theme');
                 if (savedTheme && savedTheme !== this.currentTheme) {
-                    this.setTheme(savedTheme);
+                    this.setTheme(savedTheme, false);
+                } else if (!savedTheme) {
+                    this.setTheme(this.getSystemTheme(), false);
                 }
             }
         });
@@ -104,7 +103,7 @@ class ThemeManager {
     }
 }
 
-// Navigation management
+// ナビのアクティブ状態管理
 class NavigationManager {
     constructor() {
         this.navLinks = document.querySelectorAll('.nav-link');
@@ -113,7 +112,7 @@ class NavigationManager {
     }
 
     setupEventListeners() {
-        this.navLinks.forEach(link => {
+        this.navLinks.forEach((link) => {
             link.addEventListener('click', (e) => {
                 this.setActiveLink(e.currentTarget);
             });
@@ -121,51 +120,58 @@ class NavigationManager {
     }
 
     setActiveLink(clickedLink) {
-        this.navLinks.forEach(link => {
+        this.navLinks.forEach((link) => {
             link.classList.remove('active');
         });
         clickedLink.classList.add('active');
     }
 
     setActiveLinkByCurrentPage() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        this.navLinks.forEach(link => {
+        const path = window.location.pathname;
+        const currentPage = path.split('/').pop() || 'index.html';
+        this.navLinks.forEach((link) => {
             link.classList.remove('active');
-            const href = link.getAttribute('href');
-            if (href && (href.includes(currentPage) || (currentPage === '' && href.includes('index.html')))) {
+            const href = link.getAttribute('href') || '';
+            const hrefPage = href.split('/').pop();
+            if (
+                hrefPage === currentPage ||
+                (currentPage === '' && hrefPage === 'index.html') ||
+                (currentPage === 'index.html' && hrefPage === 'index.html') ||
+                (path.includes('/about') && href.includes('about'))
+            ) {
                 link.classList.add('active');
             }
         });
     }
 }
 
-// Animation manager
+// スクロール入場アニメーション
 class AnimationManager {
     constructor() {
         this.observer = new IntersectionObserver(
             (entries) => {
-                entries.forEach(entry => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('animate');
+                        entry.target.classList.add('is-visible');
+                        this.observer.unobserve(entry.target);
                     }
                 });
             },
             {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
             }
         );
     }
 
     observeElements() {
-        const elementsToAnimate = document.querySelectorAll('.profile-section, .main-title, .subtitle');
-        elementsToAnimate.forEach(element => {
+        document.querySelectorAll('[data-reveal]').forEach((element) => {
             this.observer.observe(element);
         });
     }
 }
 
-// Visitor counter manager
+// 訪問カウンター表示（Home のみ）
 class VisitorCounterManager {
     constructor() {
         this.counter = document.querySelector('.visitor-counter');
@@ -174,71 +180,47 @@ class VisitorCounterManager {
     }
 
     init() {
-        if (this.counter) {
-            this.setupScrollListener();
-            console.log('VisitorCounterManager initialized');
-        } else {
-            console.warn('Visitor counter element not found');
+        if (!this.counter) {
+            return;
         }
+        this.setupScrollListener();
     }
 
     setupScrollListener() {
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-            
-            // Show counter when scrolled down 20% of the page or after 100px
-            const threshold = Math.max(documentHeight * 0.2, 100);
-            
-            if (scrollY > threshold && !this.isVisible) {
+        const onScroll = () => {
+            const threshold = Math.max(window.innerHeight * 0.35, 120);
+            if (window.scrollY > threshold && !this.isVisible) {
                 this.showCounter();
-            } else if (scrollY <= threshold && this.isVisible) {
+            } else if (window.scrollY <= threshold && this.isVisible) {
                 this.hideCounter();
             }
-        });
-        
-        // 初期チェック - ページが既にスクロールされている場合
-        const scrollY = window.scrollY;
-        const documentHeight = document.documentElement.scrollHeight;
-        const threshold = Math.max(documentHeight * 0.2, 100);
-        
-        if (scrollY > threshold) {
-            this.showCounter();
-        }
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
     }
 
     showCounter() {
-        if (this.counter) {
-            this.counter.classList.add('visible');
-            this.isVisible = true;
-            console.log('Visitor counter shown');
-        }
+        this.counter.classList.add('visible');
+        this.isVisible = true;
     }
 
     hideCounter() {
-        if (this.counter) {
-            this.counter.classList.remove('visible');
-            this.isVisible = false;
-            console.log('Visitor counter hidden');
-        }
+        this.counter.classList.remove('visible');
+        this.isVisible = false;
     }
 }
 
-
-// Main application class
+// アプリ初期化
 class PortfolioApp {
     constructor() {
         this.themeManager = new ThemeManager();
         this.navigationManager = new NavigationManager();
         this.animationManager = new AnimationManager();
         this.visitorCounterManager = new VisitorCounterManager();
-        
         this.init();
     }
 
     init() {
-        // Wait for DOM to be fully loaded
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
                 this.animationManager.observeElements();
@@ -246,35 +228,26 @@ class PortfolioApp {
         } else {
             this.animationManager.observeElements();
         }
-
-        // Add smooth scrolling for anchor links
         this.setupSmoothScrolling();
-        
-        // Add keyboard navigation support
         this.setupKeyboardNavigation();
     }
 
     setupSmoothScrolling() {
-        const links = document.querySelectorAll('a[href^="#"]');
-        links.forEach(link => {
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
                 const targetId = link.getAttribute('href')?.substring(1);
                 const targetElement = document.getElementById(targetId || '');
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                if (!targetElement) {
+                    return;
                 }
+                e.preventDefault();
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     }
 
     setupKeyboardNavigation() {
         document.addEventListener('keydown', (e) => {
-            // Toggle theme with Ctrl/Cmd + T
             if ((e.ctrlKey || e.metaKey) && e.key === 't') {
                 e.preventDefault();
                 this.themeManager.toggleTheme();
@@ -283,39 +256,26 @@ class PortfolioApp {
     }
 }
 
-// Initialize the application
 let app;
 
-// Function to initialize app
 function initializeApp() {
-    if (!app) {
-        try {
-            app = new PortfolioApp();
-            console.log('PortfolioApp initialized successfully');
-        } catch (error) {
-            console.error('Error initializing PortfolioApp:', error);
-        }
+    if (app) {
+        return;
     }
+    app = new PortfolioApp();
 }
 
-// Multiple initialization strategies for GitHub Pages compatibility
 function initApp() {
-    // Strategy 1: DOMContentLoaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializeApp);
     } else {
-        // Strategy 2: Immediate initialization
         initializeApp();
     }
-    
-    // Strategy 3: Fallback with timeout
     setTimeout(() => {
         if (!app) {
-            console.log('Fallback initialization triggered');
             initializeApp();
         }
     }, 1000);
 }
 
-// Start initialization
 initApp();
