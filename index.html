@@ -11,13 +11,15 @@
     <meta name="robots" content="index, follow">
     <meta name="language" content="ja">
     <meta name="theme-color" content="#041422">
+    <link rel="icon" href="photos/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="photos/icon.png">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://coffin299.net/">
     <meta property="og:title" content="coffin299 - Underwater Archive">
     <meta property="og:description" content="水没した図書館に残る、coffin299（ごみぃ）のデジタルアーカイブ。">
-    <meta property="og:image" content="https://coffin299.net/photos/OPG.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image" content="https://coffin299.net/photos/OGP.png">
+    <meta property="og:image:width" content="1672">
+    <meta property="og:image:height" content="941">
     <meta property="og:image:alt" content="coffin299 profile">
     <meta property="og:site_name" content="coffin299 Portfolio">
     <meta property="og:locale" content="ja_JP">
@@ -25,11 +27,21 @@
     <meta name="twitter:url" content="https://coffin299.net/">
     <meta name="twitter:title" content="coffin299 - Underwater Archive">
     <meta name="twitter:description" content="水没した図書館に残る、coffin299（ごみぃ）のデジタルアーカイブ。">
-    <meta name="twitter:image" content="https://coffin299.net/photos/OPG.png">
+    <meta name="twitter:image" content="https://coffin299.net/photos/OGP.png">
     <meta name="twitter:creator" content="@coffin299">
     <meta name="twitter:site" content="@coffin299">
     <link rel="canonical" href="https://coffin299.net/">
     <link rel="preload" as="image" href="assets/background.png">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.webgpu.js",
+            "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.webgpu.js",
+            "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.tsl.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        }
+    }
+    </script>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -38,7 +50,7 @@
         "alternateName": "ごみぃ",
         "description": "AIプログラマー & 3DCGアーティスト",
         "url": "https://coffin299.net/",
-        "image": "https://coffin299.net/photos/OPG.png",
+        "image": "https://coffin299.net/photos/icon.png",
         "sameAs": [
             "https://github.com/coffin299",
             "https://x.com/coffin299",
@@ -54,7 +66,12 @@
         (function () {
             var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             var saved = localStorage.getItem("scene-quality");
-            var quality = reduced || saved === "still" ? "still" : "auto";
+            var quality = "auto";
+            if (reduced) {
+                quality = "still";
+            } else if (saved === "low" || saved === "still" || saved === "auto") {
+                quality = saved;
+            }
             document.documentElement.setAttribute("data-quality", quality);
         })();
     </script>
@@ -69,7 +86,7 @@
 </head>
 <body data-page="home">
     <a class="skip-link" href="#home">本文へ</a>
-    <div class="world" data-photo="assets/background.png">
+    <div class="world" data-photo="assets/background.png" data-room="assets/background_parallax.png" data-avatar="assets/background_avator.png">
         <div class="world-photo" style="background-image: url('assets/background.png')"></div>
         <canvas id="world-canvas" class="world-canvas"></canvas>
         <div class="world-scrim"></div>
@@ -97,7 +114,7 @@
         <section class="hero" id="home" aria-label="ヒーロー">
             <div class="hero-copy">
                 <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>UNDERWATER ARCHIVE / ONLINE</p>
-                <h1>A little world<br><em>beneath the surface.</em></h1>
+                <h1>Let's melt our coding skills and brains with AI！</h1>
                 <p class="lede">AI-assisted development / 3D &amp; Virtual Worlds</p>
                 <div class="hero-actions">
                     <a class="btn btn-primary" href="#portfolios">Explore Works</a>
@@ -114,7 +131,7 @@
                     <p>AIプログラマー &amp; 3DCGアーティスト</p>
                 </header>
                 <div class="profile-block glass" data-reveal>
-                    <img src="photos/coffin299.gif" alt="coffin299" class="profile-image" onerror="this.style.display='none'">
+                    <img src="photos/icon.png" alt="coffin299" class="profile-image">
                     <div>
                         <h3 class="profile-name">coffin299 (ごみぃ)</h3>
                         <p class="profile-title">AIプログラマー &amp; 3DCGアーティスト</p>
@@ -306,6 +323,6 @@
         </section>
     </main>
     <script src="js/app.js"></script>
-    <script type="module" src="js/scene.js"></script>
+    <script type="module" src="js/scene.js?v=20"></script>
 </body>
 </html>

@@ -9,18 +9,23 @@
     <meta name="author" content="coffin299">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#041422">
+    <link rel="icon" href="../../photos/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../../photos/icon.png">
     <link rel="canonical" href="https://coffin299.net/pages/contact/">
     <meta property="og:title" content="Contact coffin299 - Underwater Archive">
     <meta property="og:description" content="coffin299（ごみぃ）へのお問い合わせ。GitHub、X、Discord、BOOTHでの連絡方法を紹介。">
     <meta property="og:url" content="https://coffin299.net/pages/contact/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://coffin299.net/photos/OPG.png">
+    <meta property="og:image" content="https://coffin299.net/photos/OGP.png">
+    <meta property="og:image:width" content="1672">
+    <meta property="og:image:height" content="941">
+    <meta property="og:image:alt" content="coffin299 underwater archive">
     <meta property="og:site_name" content="coffin299 Portfolio">
     <meta property="og:locale" content="ja_JP">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Contact coffin299 - Underwater Archive">
     <meta name="twitter:description" content="coffin299（ごみぃ）へのお問い合わせ。GitHub、X、Discord、BOOTHでの連絡方法を紹介。">
-    <meta name="twitter:image" content="https://coffin299.net/photos/OPG.png">
+    <meta name="twitter:image" content="https://coffin299.net/photos/OGP.png">
     <meta name="twitter:creator" content="@coffin299">
     <script type="application/ld+json">
     {
@@ -35,7 +40,12 @@
         (function () {
             var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             var saved = localStorage.getItem("scene-quality");
-            var quality = reduced || saved === "still" ? "still" : "auto";
+            var quality = "auto";
+            if (reduced) {
+                quality = "still";
+            } else if (saved === "low" || saved === "still" || saved === "auto") {
+                quality = saved;
+            }
             document.documentElement.setAttribute("data-quality", quality);
         })();
     </script>
@@ -43,12 +53,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="../../assets/background.png">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.webgpu.js",
+            "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.webgpu.js",
+            "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.tsl.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+        }
+    }
+    </script>
     <link rel="stylesheet" href="../../styles/styles.css">
     <link rel="stylesheet" href="../../styles/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body data-page="contact">
-    <div class="world" data-photo="../../assets/background.png">
+    <div class="world" data-photo="../../assets/background.png" data-room="../../assets/background_parallax.png" data-avatar="../../assets/background_avator.png">
         <div class="world-photo" style="background-image: url('../../assets/background.png')"></div>
         <canvas id="world-canvas" class="world-canvas"></canvas>
         <div class="world-scrim"></div>
@@ -109,6 +129,6 @@
         </div>
     </main>
     <script src="../../js/app.js"></script>
-    <script type="module" src="../../js/scene.js"></script>
+    <script type="module" src="../../js/scene.js?v=20"></script>
 </body>
 </html>

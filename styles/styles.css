@@ -266,7 +266,7 @@ main {
 }
 
 .hero-copy {
-    width: min(30rem, 46vw);
+    width: min(34rem, 48vw);
     animation: rise-in 0.9s ease both;
 }
 
@@ -299,7 +299,9 @@ main {
 }
 
 .hero h1 {
-    font-size: clamp(3.4rem, 7.4vw, 6.6rem);
+    font-size: clamp(2.35rem, 4.2vw, 3.55rem);
+    line-height: 1.12;
+    max-width: 11em;
     text-shadow: 0 10px 30px rgba(0, 10, 20, 0.28);
 }
 
@@ -510,20 +512,28 @@ section[id] {
     }
 
     .hero {
-        align-items: flex-start;
-        padding-top: 8.5rem;
+        align-items: flex-end;
+        min-height: 100svh;
+        padding: 7.5rem 1.2rem 1.6rem;
+    }
+
+    .hero-copy {
+        width: 100%;
     }
 
     .hero h1 {
-        font-size: clamp(2.8rem, 14vw, 4.2rem);
+        font-size: clamp(1.85rem, 7.4vw, 2.45rem);
+        max-width: none;
     }
 
     .world-photo {
-        background-position: center calc(78% - var(--scroll) * 16px);
+        background-position: 66% calc(56% - var(--scroll) * 12px);
+        transform: scale(1.32);
+        transform-origin: 66% 52%;
     }
 
     .world-scrim {
-        background: linear-gradient(180deg, rgba(3, 14, 28, 0.2) 0%, rgba(3, 14, 28, 0.18) 42%, rgba(3, 14, 28, 0.72) 100%);
+        background: linear-gradient(180deg, rgba(3, 14, 28, 0.34) 0%, rgba(3, 14, 28, 0.02) 26%, rgba(3, 14, 28, 0) 46%, rgba(3, 14, 28, 0.62) 78%, rgba(3, 14, 28, 0.84) 100%);
     }
 }
 
@@ -543,5 +553,11 @@ section[id] {
 
     .world-photo {
         background-position: 70% 64%;
+    }
+}
+
+@media (max-width: 800px) and (prefers-reduced-motion: reduce) {
+    .world-photo {
+        background-position: 66% 56%;
     }
 }

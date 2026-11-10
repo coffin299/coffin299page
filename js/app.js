@@ -7,8 +7,8 @@ function readQuality() {
         return "still";
     }
     const saved = localStorage.getItem("scene-quality");
-    if (saved === "still") {
-        return "still";
+    if (saved === "still" || saved === "low" || saved === "auto") {
+        return saved;
     }
     return "auto";
 }
@@ -21,9 +21,9 @@ function applyQuality(quality, persist) {
     }
     const button = document.getElementById("quality-toggle");
     if (button) {
-        const still = quality === "still";
-        button.textContent = still ? "Still" : "Auto";
-        button.setAttribute("aria-pressed", still ? "true" : "false");
+        const labels = { auto: "Auto", low: "Low", still: "Still" };
+        button.textContent = labels[quality] || "Auto";
+        button.setAttribute("aria-pressed", quality === "still" ? "true" : "false");
     }
     window.dispatchEvent(new CustomEvent("archive-quality", { detail: quality }));
 }
@@ -37,14 +37,15 @@ class QualityControl {
             return;
         }
         button.addEventListener("click", () => {
-            // 静止と自動を交互に切り替える
-            const next = this.quality === "still" ? "auto" : "still";
             const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             if (reduced) {
                 this.quality = "still";
                 applyQuality("still", true);
                 return;
             }
+            const order = ["auto", "low", "still"];
+            const index = order.indexOf(this.quality);
+            const next = order[(index + 1) % order.length];
             this.quality = next;
             applyQuality(next, true);
         });

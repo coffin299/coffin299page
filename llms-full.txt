@@ -12,6 +12,8 @@
 - Discord: https://discord.com/users/270446628622696449
 - BOOTH: https://coffin299.booth.pm/
 - YouTube: https://www.youtube.com/@coffin2999
+- Icon: https://coffin299.net/photos/icon.png
+- Share image: https://coffin299.net/photos/OGP.png
 
 ## About
 
@@ -73,6 +75,14 @@ OBS Studio用 Discord チャット表示ツール。
 
 MikuMikuDanceを使ったキャラクターアニメーション作品。
 - YouTube: https://www.youtube.com/@coffin2999
+
+## Rendering
+
+- Far layer: assets/background_parallax.png
+- Near layer: assets/background_avator.png, seated on the stairs, using the file alpha
+- Fallback still: assets/background.png when Still, prefers-reduced-motion, a layer fails to load, or both WebGPU and WebGL fail
+- WebGPU uses Three.js r180 compute for the height field, bubbles, dust, plankton, and boids. The library pass then gets fog, a small height-field distortion, bloom, edge chromatic aberration, and a soft upper-frame blur. The avatar is drawn after that pass so the figure stays sharp
+- Low quality reduces particle counts, resolution, and compute rate. WebGL keeps the same scenes with CPU updates and a single fog, distortion, and chromatic aberration pass
 
 ## Contact
 
