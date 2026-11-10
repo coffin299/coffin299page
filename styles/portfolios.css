@@ -1,184 +1,126 @@
-/* Portfolios ページ — フラット背景、カード内のみグラデ */
+/* 作品カード。ホバーで少し浮き、縁だけ光る。 */
 
-.projects-grid {
+.card-grid,
+.archive-grid,
+.tech-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.9rem;
 }
 
-.project-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+.project-card,
+.archive-card,
+.tech-category,
+.cg-card {
+    padding: 1.1rem;
     border-radius: var(--radius);
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition: border-color var(--transition), transform var(--transition);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.project-card:hover {
-    border-color: var(--accent-primary);
-    transform: translateY(-3px);
+.project-card:hover,
+.archive-card:hover,
+.cg-card:hover,
+.tech-category:hover {
+    transform: translateY(-6px);
+    border-color: rgba(190, 236, 255, 0.72);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.48),
+        0 18px 36px rgba(0, 20, 40, 0.28),
+        0 0 24px rgba(120, 210, 255, 0.18);
 }
 
-.project-card-main {
-    grid-column: 1 / -1;
-    border-color: var(--accent-primary);
-}
-
-.project-header {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-}
-
-.project-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #041216;
-    flex-shrink: 0;
-    /* カード内のみグラデ */
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-}
-
-.project-icon-main {
-    background: linear-gradient(135deg, #2ec4d6, #0aa2b5);
-}
-
-.project-title {
+.project-card h3,
+.archive-card h3,
+.cg-card h3,
+.tech-title {
+    position: relative;
+    z-index: 1;
     font-family: var(--font-display);
-    font-size: 1.35rem;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.4rem;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1;
 }
 
-.project-title-main {
-    font-size: 1.7rem;
+.card-kicker,
+.project-badge,
+.section-title {
+    position: relative;
+    z-index: 1;
 }
 
+.card-kicker,
 .project-badge {
     display: inline-block;
+    margin-bottom: 0.45rem;
+    color: var(--accent);
     font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-weight: 650;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #041216;
-    background: var(--accent-primary);
-    padding: 0.2rem 0.55rem;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
 }
 
-.project-tags {
+.project-card p,
+.archive-card p,
+.cg-card p,
+.tech-category p {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.7rem;
+    color: var(--text-secondary);
+}
+
+.project-tags,
+.cg-tags,
+.tech-items {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    margin-top: 0.8rem;
 }
 
-.tag {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    background: var(--bg-primary);
-    padding: 0.2rem 0.55rem;
-    border-radius: 4px;
+.project-features,
+.project-footer,
+.link-row {
+    position: relative;
+    z-index: 1;
 }
 
-.project-description {
-    color: var(--text-secondary);
-    font-size: 0.98rem;
+.project-features {
+    margin-top: 0.9rem;
 }
 
 .project-features h4 {
-    font-size: 0.95rem;
-    margin-bottom: 0.55rem;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    margin-bottom: 0.35rem;
 }
 
-.project-features ul,
-.features-grid ul {
-    list-style: none;
-    padding: 0;
-}
-
-.project-features li,
-.features-grid li {
-    position: relative;
-    padding: 0.25rem 0 0.25rem 1.15rem;
+.project-features ul {
+    margin-left: 1.1rem;
     color: var(--text-secondary);
-    font-size: 0.93rem;
 }
 
-.project-features li::before,
-.features-grid li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.7em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent-primary);
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.25rem 1.5rem;
+.project-footer,
+.card-grid + .section-title,
+.archive-block {
+    margin-top: 1rem;
 }
 
 .project-footer {
-    margin-top: auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.55rem;
+    gap: 0.5rem;
 }
 
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.88rem;
-    color: #041216;
-    padding: 0.55rem 0.9rem;
-    border-radius: var(--radius-sm);
-    /* カード内ボタンのみグラデ */
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    transition: transform var(--transition), filter var(--transition);
-}
-
-.project-link:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.05);
-}
-
-.project-link[href*='github.com'] {
-    background: linear-gradient(135deg, #3d4a57, #0aa2b5);
-    color: #f5f7fa;
-}
-
-.project-link[href*='deepwiki.com'] {
-    background: linear-gradient(135deg, #1aa3b5, #067a8a);
-    color: #f5f7fa;
-}
-
-.project-link[href*='coffin299.github.io'],
-.project-link[href*='momoka-project.com'] {
-    background: linear-gradient(135deg, #0aa2b5, #067a8a);
-}
-
-.cg-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
+.section-title {
+    margin: 2rem 0 0.9rem;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 500;
 }
 
 .cg-card-link {
@@ -186,155 +128,35 @@
     color: inherit;
 }
 
-.cg-card {
-    display: grid;
-    grid-template-columns: minmax(220px, 360px) 1fr;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color var(--transition), transform var(--transition);
-}
-
-.cg-card:hover {
-    border-color: var(--accent-primary);
-    transform: translateY(-3px);
-}
-
 .cg-preview {
     position: relative;
-    min-height: 200px;
-    background: var(--bg-elevated);
+    z-index: 1;
+    overflow: hidden;
+    border-radius: 0.9rem;
+    margin-bottom: 0.85rem;
+    border: 1px solid var(--line-soft);
 }
 
 .cg-image {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
 }
 
 .cg-overlay {
     position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem;
-    background: linear-gradient(transparent, rgba(8, 10, 12, 0.75));
-    color: #f5f7fa;
-    opacity: 0;
-    transition: opacity var(--transition);
-}
-
-.cg-card:hover .cg-overlay {
-    opacity: 1;
-}
-
-.youtube-link-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.cg-details {
-    padding: 1.35rem;
-}
-
-.cg-details h4 {
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    margin-bottom: 0.45rem;
-}
-
-.cg-details p {
-    color: var(--text-secondary);
-    margin-bottom: 0.9rem;
-}
-
-.cg-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-}
-
-.tech-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.tech-category {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    padding: 1.35rem;
-}
-
-.tech-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.05rem;
-    margin-bottom: 1rem;
-}
-
-.tech-title i {
-    color: var(--accent-primary);
-}
-
-.tech-items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
+    inset: auto 0 0 0;
+    padding: 0.8rem;
+    background: linear-gradient(transparent, rgba(3, 14, 28, 0.78));
 }
 
 .tech-item {
-    display: flex;
-    flex-direction: column;
+    display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.9rem 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    background: var(--bg-primary);
-    font-size: 0.88rem;
-    font-weight: 500;
+    color: var(--text-secondary);
 }
 
-.tech-item i {
-    font-size: 1.4rem;
-    color: var(--accent-primary);
-}
-
-@media (max-width: 900px) {
-    .projects-grid,
-    .tech-grid,
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .cg-card {
-        grid-template-columns: 1fr;
-    }
-
-    .project-card-main {
-        grid-column: auto;
-    }
-}
-
-@media (max-width: 480px) {
-    .project-header {
-        flex-direction: column;
-    }
-
-    .project-footer {
-        flex-direction: column;
-    }
-
-    .project-link {
-        width: 100%;
-        justify-content: center;
-    }
+.archive-block {
+    margin-top: 2.2rem;
 }

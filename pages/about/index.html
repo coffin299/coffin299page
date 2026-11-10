@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About coffin299 - AIプログラマー &amp; 3DCGアーティスト | プロフィール</title>
-
+    <title>About coffin299 - Underwater Archive</title>
     <meta name="description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作、Discord Bot開発のスキルと経験を紹介。">
-    <meta name="keywords" content="coffin299, ごみぃ, プロフィール, AIプログラマー, 3DCGアーティスト, Python, JavaScript, MMD, Unity, LLM">
+    <meta name="keywords" content="coffin299, ごみぃ, プロフィール, AIプログラマー, 3DCGアーティスト, Python, JavaScript, MMD, Unity, LLM, VRChat">
     <meta name="author" content="coffin299">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0aa2b5">
+    <meta name="theme-color" content="#041422">
     <link rel="canonical" href="https://coffin299.net/pages/about/">
-
-    <meta property="og:title" content="About coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta property="og:title" content="About coffin299 - Underwater Archive">
     <meta property="og:description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
     <meta property="og:url" content="https://coffin299.net/pages/about/">
     <meta property="og:type" content="profile">
     <meta property="og:image" content="https://coffin299.net/photos/OPG.png">
     <meta property="og:site_name" content="coffin299 Portfolio">
     <meta property="og:locale" content="ja_JP">
-
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="About coffin299 - AIプログラマー &amp; 3DCGアーティスト">
+    <meta name="twitter:title" content="About coffin299 - Underwater Archive">
     <meta name="twitter:description" content="coffin299（ごみぃ）のプロフィール。AI技術を活用したプログラミング、3DCGアニメーション制作のスキルと経験を紹介。">
     <meta name="twitter:image" content="https://coffin299.net/photos/OPG.png">
     <meta name="twitter:creator" content="@coffin299">
-
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -40,131 +36,116 @@
             "url": "https://coffin299.net/",
             "sameAs": [
                 "https://github.com/coffin299",
-                "https://x.com/coffin299"
+                "https://x.com/coffin299",
+                "https://discord.com/users/270446628622696449",
+                "https://coffin299.booth.pm/"
             ]
         }
     }
     </script>
-
     <script>
         (function () {
-            var saved = localStorage.getItem('theme');
-            var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            document.documentElement.setAttribute('data-theme', theme);
+            var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var saved = localStorage.getItem("scene-quality");
+            var quality = reduced || saved === "still" ? "still" : "auto";
+            document.documentElement.setAttribute("data-quality", quality);
         })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="../../assets/background.png">
     <link rel="stylesheet" href="../../styles/styles.css">
     <link rel="stylesheet" href="../../styles/about.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-<body>
-    <header class="site-header">
-        <a class="brand-mark" href="../../">coffin<span>299</span></a>
-        <div class="header-actions">
-            <nav class="nav-container" aria-label="メインナビ">
-                <ul class="nav-links">
-                    <li><a href="../../" class="nav-link">Home</a></li>
-                    <li><a href="../about/" class="nav-link active">About</a></li>
-                    <li><a href="../portfolios/" class="nav-link">Portfolios</a></li>
-                    <li><a href="../contact/" class="nav-link">Contact</a></li>
-                </ul>
-            </nav>
-            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="テーマ切り替え">
-                <i class="fas fa-moon" id="theme-icon"></i>
-            </button>
+<body data-page="about">
+    <div class="world" data-photo="../../assets/background.png">
+        <div class="world-photo" style="background-image: url('../../assets/background.png')"></div>
+        <canvas id="world-canvas" class="world-canvas"></canvas>
+        <div class="world-scrim"></div>
+        <div class="world-surface" id="world-surface"></div>
+    </div>
+    <header class="nav-float glass">
+        <a class="wordmark" href="../../">coffin<span>299</span></a>
+        <nav aria-label="メインナビ">
+            <ul class="nav-links">
+                <li><a href="../../" class="nav-link">Home</a></li>
+                <li><a href="../about/" class="nav-link">About</a></li>
+                <li><a href="../portfolios/" class="nav-link">Portfolios</a></li>
+                <li><a href="../contact/" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="nav-tools">
+            <a class="social-link" href="https://github.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a class="social-link" href="https://x.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+            <a class="social-link" href="https://discord.com/users/270446628622696449" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
+            <a class="social-link" href="https://coffin299.booth.pm/" target="_blank" rel="noopener noreferrer" aria-label="BOOTH"><img src="../../assets/BOOTH_logo.png" alt=""></a>
+            <button id="quality-toggle" class="quality-toggle" type="button" aria-pressed="false">Auto</button>
         </div>
     </header>
-
-    <main class="page-main">
-        <div class="page-wrap">
+    <main class="page-main" id="about">
+        <div class="page-wrap stack-gap">
             <header class="page-header" data-reveal>
                 <p class="page-kicker">About</p>
                 <h1 class="page-title">coffin299</h1>
                 <p class="page-subtitle">AIプログラマー &amp; 3DCGアーティスト</p>
             </header>
-
-            <section class="profile-block" data-reveal>
-                <img src="../../photos/coffin299.gif" alt="coffin299" class="profile-image">
+            <section class="profile-block glass" data-reveal>
+                <img src="../../photos/coffin299.gif" alt="coffin299" class="profile-image" onerror="this.style.display='none'">
                 <div>
                     <h2 class="profile-name">coffin299 (ごみぃ)</h2>
                     <p class="profile-title">AIプログラマー &amp; 3DCGアーティスト</p>
                     <div class="social-links">
-                        <a href="https://github.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://x.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="X">
-                            <i class="fab fa-twitter"></i>
-                        </a>
+                        <a class="social-link" href="https://github.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a class="social-link" href="https://x.com/coffin299" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="fab fa-x-twitter"></i></a>
+                        <a class="social-link" href="https://discord.com/users/270446628622696449" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a class="social-link" href="https://coffin299.booth.pm/" target="_blank" rel="noopener noreferrer" aria-label="BOOTH"><img src="../../assets/BOOTH_logo.png" alt=""></a>
                     </div>
                 </div>
             </section>
-
             <section data-reveal>
                 <h2 class="section-title">About Me</h2>
-                <p class="intro-text">
-                    日々のゲーム体験と日常から生まれる「コレがあったらいいな」のアイデアをLLMを駆使して形にするのが得意です。
-                    プログラミングと3DCGの両方に興味を持ち、新しい技術を学ぶことを楽しんでいます。
-                </p>
+                <p class="intro-text">日々のゲーム体験と日常から生まれる「コレがあったらいいな」のアイデアをLLMを駆使して形にするのが得意です。プログラミングと3DCGの両方に興味を持ち、新しい技術を学ぶことを楽しんでいます。</p>
             </section>
-
+            <section data-reveal>
+                <h2 class="section-title">Focus</h2>
+                <div class="focus-grid">
+                    <article class="focus-card glass"><span>01</span><h3>AI-assisted Software Development</h3><p>LLMを使って、日常の「あったらいいな」を動くソフトウェアにします。</p></article>
+                    <article class="focus-card glass"><span>02</span><h3>Discord Bot Development</h3><p>対話、音楽、通知、管理まで、サーバーの中で動くボットを作っています。</p></article>
+                    <article class="focus-card glass"><span>03</span><h3>3DCG / Character Modeling</h3><p>MMDとUnityで、キャラクターの絵作りとアニメーションを続けています。</p></article>
+                    <article class="focus-card glass"><span>04</span><h3>VRChat / Virtual Worlds</h3><p>仮想空間のアバターと、その場で届く表現を探しています。</p></article>
+                    <article class="focus-card glass"><span>05</span><h3>Open Source Projects</h3><p>作ったものはGitHubで公開し、記録として残しています。</p></article>
+                </div>
+            </section>
             <section data-reveal>
                 <h2 class="section-title">Skills</h2>
                 <div class="skills-grid">
-                    <div class="skill-category">
+                    <article class="skill-category glass">
                         <h3 class="category-title"><i class="fas fa-code"></i> プログラミング</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">C#</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">HTML</span>
-                            <span class="skill-tag">CSS</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
+                        <div class="skill-tags"><span class="skill-tag">Java</span><span class="skill-tag">C#</span><span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span></div>
+                    </article>
+                    <article class="skill-category glass">
                         <h3 class="category-title"><i class="fas fa-cube"></i> 3DCG</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">MMD</span>
-                            <span class="skill-tag">Unity</span>
-                        </div>
-                    </div>
-                    <div class="skill-category">
+                        <div class="skill-tags"><span class="skill-tag">MMD</span><span class="skill-tag">Unity</span></div>
+                    </article>
+                    <article class="skill-category glass">
                         <h3 class="category-title"><i class="fas fa-robot"></i> AI・機械学習</h3>
-                        <div class="skill-tags">
-                            <span class="skill-tag">LLM</span>
-                            <span class="skill-tag">Discord Bot</span>
-                            <span class="skill-tag">API Integration</span>
-                        </div>
-                    </div>
+                        <div class="skill-tags"><span class="skill-tag">LLM</span><span class="skill-tag">Discord Bot</span><span class="skill-tag">API Integration</span></div>
+                    </article>
                 </div>
             </section>
-
             <section data-reveal>
                 <h2 class="section-title">Interests</h2>
                 <div class="interests-grid">
-                    <div class="interest-card">
-                        <div class="interest-icon"><i class="fas fa-gamepad"></i></div>
-                        <h3>ゲーム</h3>
-                        <p>様々なジャンルのゲームをプレイし、3DCG制作のインスピレーションを得ています。</p>
-                    </div>
-                    <div class="interest-card">
-                        <div class="interest-icon"><i class="fas fa-music"></i></div>
-                        <h3>音楽</h3>
-                        <p>音楽を聴くことが好きで、Discord Botでの音楽再生システムも開発しています。</p>
-                    </div>
-                    <div class="interest-card">
-                        <div class="interest-icon"><i class="fas fa-lightbulb"></i></div>
-                        <h3>アイデア実現</h3>
-                        <p>日常の「あったらいいな」をAI技術を使って実際に形にすることが趣味です。</p>
-                    </div>
+                    <article class="interest-card glass"><div class="interest-icon"><i class="fas fa-gamepad"></i></div><h3>ゲーム</h3><p>様々なジャンルのゲームをプレイし、3DCG制作のインスピレーションを得ています。</p></article>
+                    <article class="interest-card glass"><div class="interest-icon"><i class="fas fa-music"></i></div><h3>音楽</h3><p>音楽を聴くことが好きで、Discord Botでの音楽再生システムも開発しています。</p></article>
+                    <article class="interest-card glass"><div class="interest-icon"><i class="fas fa-lightbulb"></i></div><h3>アイデア実現</h3><p>日常の「あったらいいな」をAI技術を使って実際に形にすることが趣味です。</p></article>
                 </div>
             </section>
         </div>
     </main>
-
     <script src="../../js/app.js"></script>
+    <script type="module" src="../../js/scene.js"></script>
 </body>
 </html>

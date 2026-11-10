@@ -1,15 +1,15 @@
 # coffin299
 
-> AIプログラマー & 3DCGアーティスト。LLMを活用したDiscord Bot開発とMMDアニメーション制作のポートフォリオ。
+> AIプログラマー & 3DCGアーティスト。水没した図書館を背景にしたポートフォリオ。
 
 coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開しています。正規URLは https://coffin299.net/ です。
 
 ## Pages
 
-- [Home](https://coffin299.net/): ブランド紹介とエントリポイント
+- [Home](https://coffin299.net/): 水中のヒーローと、About / 作品 / 連絡先への入口
 - [About](https://coffin299.net/pages/about/): プロフィール、スキル、興味関心
 - [Portfolios](https://coffin299.net/pages/portfolios/): Discord Bot / 3DCG 作品一覧
-- [Contact](https://coffin299.net/pages/contact/): GitHub / X / Discord の連絡先
+- [Contact](https://coffin299.net/pages/contact/): GitHub / X / Discord / BOOTH の連絡先
 
 ## Projects
 
@@ -27,4 +27,6 @@ coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開して�
 - [Sitemap](https://coffin299.net/sitemap.xml): 検索エンジン向けサイトマップ
 - [GitHub](https://github.com/coffin299): ソースコード
 - [X](https://x.com/coffin299): 開発・制作の投稿
+- [Discord](https://discord.com/users/270446628622696449): 連絡先
+- [BOOTH](https://coffin299.booth.pm/): 作品の頒布
 - [YouTube](https://www.youtube.com/@coffin2999): 3DCG / MMD 作品

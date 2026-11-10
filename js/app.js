@@ -1,289 +1,218 @@
-// テーマ管理: システム準拠 + 手動トグル
-class ThemeManager {
+// ナビ、品質切替、入場アニメーション、静止画時の視差。
+
+function readQuality() {
+    // 動きを減らす設定では演出を止める
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+        return "still";
+    }
+    const saved = localStorage.getItem("scene-quality");
+    if (saved === "still") {
+        return "still";
+    }
+    return "auto";
+}
+
+function applyQuality(quality, persist) {
+    // ルート属性をシーン側が読む
+    document.documentElement.dataset.quality = quality;
+    if (persist) {
+        localStorage.setItem("scene-quality", quality);
+    }
+    const button = document.getElementById("quality-toggle");
+    if (button) {
+        const still = quality === "still";
+        button.textContent = still ? "Still" : "Auto";
+        button.setAttribute("aria-pressed", still ? "true" : "false");
+    }
+    window.dispatchEvent(new CustomEvent("archive-quality", { detail: quality }));
+}
+
+class QualityControl {
     constructor() {
-        // 現在テーマを初期判定から取得
-        this.currentTheme = this.getInitialTheme();
-        this.themeToggle = null;
-        this.themeIcon = null;
-        this.init();
-    }
-
-    getSystemTheme() {
-        // OS の prefers-color-scheme を参照
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            return 'dark';
-        }
-        return 'light';
-    }
-
-    getInitialTheme() {
-        // 手動選択があれば優先、なければシステム準拠
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark' || savedTheme === 'light') {
-            return savedTheme;
-        }
-        return this.getSystemTheme();
-    }
-
-    init() {
-        this.themeToggle = document.getElementById('theme-toggle');
-        this.themeIcon = document.getElementById('theme-icon');
-        this.setTheme(this.currentTheme, false);
-        this.setupEventListeners();
-        this.setupSystemThemeListener();
-        this.setupStorageListener();
-    }
-
-    setupSystemThemeListener() {
-        // 手動未選択時のみ OS 変更に追従
-        if (!window.matchMedia) {
+        this.quality = readQuality();
+        applyQuality(this.quality, false);
+        const button = document.getElementById("quality-toggle");
+        if (!button) {
             return;
         }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                this.setTheme(e.matches ? 'dark' : 'light', false);
+        button.addEventListener("click", () => {
+            // 静止と自動を交互に切り替える
+            const next = this.quality === "still" ? "auto" : "still";
+            const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (reduced) {
+                this.quality = "still";
+                applyQuality("still", true);
+                return;
             }
+            this.quality = next;
+            applyQuality(next, true);
         });
-    }
-
-    setupEventListeners() {
-        if (!this.themeToggle) {
-            return;
-        }
-        this.themeToggle.addEventListener('click', () => {
-            this.toggleTheme();
-        });
-    }
-
-    setTheme(theme, persist) {
-        // data-theme を適用
-        document.documentElement.setAttribute('data-theme', theme);
-        this.currentTheme = theme;
-
-        // 明示トグル時のみ localStorage に保存
-        if (persist) {
-            localStorage.setItem('theme', theme);
-        }
-
-        // アイコン更新（ダーク時は太陽、ライト時は月）
-        if (this.themeIcon) {
-            this.themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-        }
-
-        this.notifyThemeChange();
-    }
-
-    toggleTheme() {
-        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        this.setTheme(newTheme, true);
-    }
-
-    notifyThemeChange() {
-        // 他タブへ変更を通知
-        if (typeof Storage !== 'undefined') {
-            localStorage.setItem('theme-changed', Date.now().toString());
-        }
-    }
-
-    setupStorageListener() {
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'theme' || e.key === 'theme-changed') {
-                const savedTheme = localStorage.getItem('theme');
-                if (savedTheme && savedTheme !== this.currentTheme) {
-                    this.setTheme(savedTheme, false);
-                } else if (!savedTheme) {
-                    this.setTheme(this.getSystemTheme(), false);
-                }
-            }
-        });
-    }
-
-    getCurrentTheme() {
-        return this.currentTheme;
     }
 }
 
-// ナビのアクティブ状態管理
 class NavigationManager {
     constructor() {
-        this.navLinks = document.querySelectorAll('.nav-link');
-        this.setupEventListeners();
-        this.setActiveLinkByCurrentPage();
+        this.links = Array.from(document.querySelectorAll(".nav-link"));
+        this.sections = Array.from(document.querySelectorAll("main section[id]"));
+        this.bindClicks();
+        this.syncFromLocation();
+        this.watchSections();
     }
 
-    setupEventListeners() {
-        this.navLinks.forEach((link) => {
-            link.addEventListener('click', (e) => {
-                this.setActiveLink(e.currentTarget);
+    bindClicks() {
+        this.links.forEach((link) => {
+            link.addEventListener("click", () => {
+                const href = link.getAttribute("href") || "";
+                // ページ内アンカーだけ、クリック直後に現在位置を合わせる
+                if (href.startsWith("#")) {
+                    this.setActive(href.slice(1));
+                }
             });
         });
     }
 
-    setActiveLink(clickedLink) {
-        this.navLinks.forEach((link) => {
-            link.classList.remove('active');
+    setActive(id) {
+        this.links.forEach((link) => {
+            const href = link.getAttribute("href") || "";
+            const match = href === "#" + id || (id === "home" && (href === "./" || href === "../../" || href === "#home"));
+            link.classList.toggle("active", match);
         });
-        clickedLink.classList.add('active');
     }
 
-    setActiveLinkByCurrentPage() {
-        // クリーンURL（/pages/about/）対応でパスからセクション判定
-        const path = window.location.pathname.replace(/\/index\.html?$/, '/');
-        let section = 'home';
-        if (path.includes('/pages/about')) {
-            section = 'about';
-        } else if (path.includes('/pages/portfolios')) {
-            section = 'portfolios';
-        } else if (path.includes('/pages/contact')) {
-            section = 'contact';
+    syncFromLocation() {
+        const path = window.location.pathname.replace(/\/index\.html?$/, "/");
+        let section = "home";
+        if (path.includes("/pages/about")) {
+            section = "about";
+        } else if (path.includes("/pages/portfolios")) {
+            section = "portfolios";
+        } else if (path.includes("/pages/contact")) {
+            section = "contact";
         }
-
-        this.navLinks.forEach((link) => {
-            link.classList.remove('active');
-            const href = link.getAttribute('href') || '';
-            const matches =
-                (section === 'about' && href.includes('about')) ||
-                (section === 'portfolios' && href.includes('portfolios')) ||
-                (section === 'contact' && href.includes('contact')) ||
-                (section === 'home' && !href.includes('about') && !href.includes('portfolios') && !href.includes('contact'));
-            if (matches) {
-                link.classList.add('active');
-            }
+        this.links.forEach((link) => {
+            const href = link.getAttribute("href") || "";
+            const match =
+                (section === "about" && href.includes("about")) ||
+                (section === "portfolios" && href.includes("portfolios")) ||
+                (section === "contact" && href.includes("contact")) ||
+                (section === "home" && href.includes("#home"));
+            link.classList.toggle("active", match);
         });
+    }
+
+    watchSections() {
+        // 単一ページのときだけ、見えている節でナビを更新する
+        if (this.sections.length < 2) {
+            return;
+        }
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        this.setActive(entry.target.id);
+                    }
+                });
+            },
+            { rootMargin: "-45% 0px -45% 0px", threshold: 0.01 }
+        );
+        this.sections.forEach((section) => observer.observe(section));
     }
 }
 
-// スクロール入場アニメーション
 class AnimationManager {
     constructor() {
         this.observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        this.observer.unobserve(entry.target);
+                    if (!entry.isIntersecting) {
+                        return;
                     }
+                    entry.target.classList.add("is-visible");
+                    this.observer.unobserve(entry.target);
                 });
             },
-            {
-                threshold: 0.12,
-                rootMargin: '0px 0px -40px 0px'
-            }
+            { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
         );
     }
 
-    observeElements() {
-        document.querySelectorAll('[data-reveal]').forEach((element) => {
+    observe() {
+        document.querySelectorAll("[data-reveal]").forEach((element) => {
             this.observer.observe(element);
         });
     }
 }
 
-// 訪問カウンター表示（Home のみ）
 class VisitorCounterManager {
     constructor() {
-        this.counter = document.querySelector('.visitor-counter');
-        this.isVisible = false;
-        this.init();
-    }
-
-    init() {
+        this.counter = document.querySelector(".visitor-counter");
+        this.visible = false;
         if (!this.counter) {
             return;
         }
-        this.setupScrollListener();
-    }
-
-    setupScrollListener() {
-        const onScroll = () => {
+        this.onScroll = () => {
             const threshold = Math.max(window.innerHeight * 0.35, 120);
-            if (window.scrollY > threshold && !this.isVisible) {
-                this.showCounter();
-            } else if (window.scrollY <= threshold && this.isVisible) {
-                this.hideCounter();
+            const show = window.scrollY > threshold;
+            if (show === this.visible) {
+                return;
             }
+            this.visible = show;
+            this.counter.classList.toggle("visible", show);
         };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-    }
-
-    showCounter() {
-        this.counter.classList.add('visible');
-        this.isVisible = true;
-    }
-
-    hideCounter() {
-        this.counter.classList.remove('visible');
-        this.isVisible = false;
+        window.addEventListener("scroll", this.onScroll, { passive: true });
+        this.onScroll();
     }
 }
 
-// アプリ初期化
-class PortfolioApp {
+class Atmosphere {
     constructor() {
-        this.themeManager = new ThemeManager();
-        this.navigationManager = new NavigationManager();
-        this.animationManager = new AnimationManager();
-        this.visitorCounterManager = new VisitorCounterManager();
-        this.init();
-    }
-
-    init() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => {
-                this.animationManager.observeElements();
-            });
-        } else {
-            this.animationManager.observeElements();
-        }
-        this.setupSmoothScrolling();
-        this.setupKeyboardNavigation();
-    }
-
-    setupSmoothScrolling() {
-        document.querySelectorAll('a[href^="#"]').forEach((link) => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href')?.substring(1);
-                const targetElement = document.getElementById(targetId || '');
-                if (!targetElement) {
-                    return;
-                }
-                e.preventDefault();
-                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-    }
-
-    setupKeyboardNavigation() {
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 't') {
-                e.preventDefault();
-                this.themeManager.toggleTheme();
+        this.surface = document.getElementById("world-surface");
+        this.pointerX = 0;
+        this.pointerY = 0;
+        window.addEventListener("pointermove", (event) => {
+            const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (reduced) {
+                return;
             }
-        });
+            // 静止画のとき、背景位置をわずかにずらす
+            this.pointerX = event.clientX / window.innerWidth - 0.5;
+            this.pointerY = event.clientY / window.innerHeight - 0.5;
+            document.documentElement.style.setProperty("--px", this.pointerX.toFixed(3));
+            document.documentElement.style.setProperty("--py", this.pointerY.toFixed(3));
+        }, { passive: true });
+        window.addEventListener("scroll", () => this.updateScroll(), { passive: true });
+        this.updateScroll();
     }
-}
 
-let app;
-
-function initializeApp() {
-    if (app) {
-        return;
+    updateScroll() {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduced) {
+            document.documentElement.style.setProperty("--scroll", progress.toFixed(3));
+        }
+        if (!this.surface) {
+            return;
+        }
+        const page = document.body.dataset.page || "home";
+        const floor = page === "contact" ? 0.42 : 0;
+        const ramp = Math.max(0, (progress - 0.58) / 0.42);
+        this.surface.style.opacity = String(floor + (1 - floor) * ramp);
     }
-    app = new PortfolioApp();
 }
 
 function initApp() {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initializeApp);
+    document.documentElement.dataset.quality = readQuality();
+    new QualityControl();
+    new NavigationManager();
+    const motion = new AnimationManager();
+    new VisitorCounterManager();
+    new Atmosphere();
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", () => motion.observe());
     } else {
-        initializeApp();
+        motion.observe();
     }
-    setTimeout(() => {
-        if (!app) {
-            initializeApp();
-        }
-    }, 1000);
 }
 
 initApp();

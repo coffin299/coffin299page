@@ -1,6 +1,6 @@
-# My Portfolio - coffin299
+# coffin299 - Underwater Archive
 
-これは、`coffin299(ごみぃ)`のスキルと制作物を紹介するための個人ポートフォリオサイトです。
+`coffin299(ごみぃ)` のポートフォリオです。水没した図書館に残る、個人のデジタルアーカイブとして作品とプロフィールを置いています。
 
 **正規URL:** <https://coffin299.net/>  
 **GitHub Pages:** <https://coffin299.github.io/coffin299page/>
@@ -9,17 +9,18 @@
 
 ## コンセプト
 
-AIコーダーおよび3DCGアーティストとしてのスキルセットと制作プロジェクトを、フラットで読みやすいUIで紹介します。ブランド `coffin299` を第一ビューの中心に据え、システム準拠のライト/ダーク切替に対応しています。
+深海の図書館を背景に、AIを使った開発、Discord Bot、3DCG、バーチャルワールドの記録をガラスのUIでたどります。背景の絵が主役で、ナビゲーションとカードだけを半透明にしています。
 
 ---
 
 ## 特徴
 
-*   **レスポンシブデザイン**: PC / タブレット / スマートフォンに対応
-*   **システム準拠テーマ**: OSの `prefers-color-scheme` に追従。トグルで手動切替・保持も可能
-*   **単色フラットUI**: ページ背景はフラット。グラデーションはカード内アクセントのみ
-*   **GitHub Pages対応**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
-*   **クリーンURL**: `pages/*/index.html` 配置により `/pages/about/` のように `.html` なしで公開
+*   **レスポンシブ**: PC とスマートフォン
+*   **Liquid Glass**: ナビ、ボタン、カードは半透明のガラス
+*   **水中の演出**: WebGPU、使えない環境では WebGL。どちらも無い、または動きを減らす設定では静止画
+*   **品質切替**: ナビの Auto / Still で演出を止められる
+*   **GitHub Pages**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
+*   **クリーンURL**: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`
 *   **SEO / LLM向け**: `sitemap.xml`、`robots.txt`、`llms.txt`、`llms-full.txt`、構造化データ
 
 ---
@@ -27,10 +28,24 @@ AIコーダーおよび3DCGアーティストとしてのスキルセットと�
 ## 使用技術
 
 *   **HTML5**
-*   **CSS3**（Custom Properties、Flexbox / Grid、サンセリフのみ: Space Grotesk + DM Sans）
-*   **JavaScript (ES6+)**: テーマ切替、Intersection Observer、ナビ同期
+*   **CSS3**（Custom Properties、Flexbox / Grid、backdrop-filter）
+*   **JavaScript (ES6+)**: 品質切替、Intersection Observer、Three.js
+*   **Three.js r180**: WebGPURenderer と WebGLRenderer。CDN から読み込む
 *   **Font Awesome**
 *   **GitHub Pages**
+
+---
+
+## ページ
+
+| パス | 内容 |
+| --- | --- |
+| `/` | ヒーロー、About、作品、連絡先を縦にたどる |
+| `/pages/about/` | プロフィールとスキル |
+| `/pages/portfolios/` | 作品の全文 |
+| `/pages/contact/` | GitHub / X / Discord / BOOTH |
+
+BOOTH: <https://coffin299.booth.pm/>
 
 ---
 
@@ -43,36 +58,26 @@ git clone https://github.com/coffin299/coffin299page.git
 cd coffin299page
 ```
 
-ローカルでは静的サーバー推奨（ディレクトリURLのため）:
+ディレクトリURLのため、静的サーバーを使います。
 
 ```bash
 npx serve .
 ```
 
-公開後のURL例: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`（`.html` なし）
-
 ### GitHub Pages
 
 1. Settings → Pages → Source を **GitHub Actions** に設定
 2. `main` へプッシュすると自動デプロイ
-3. 公開URL: `https://coffin299.net/`（または `https://coffin299.github.io/coffin299page/`）
+3. 公開URL: `https://coffin299.net/`
 
 ### LLM / SEO ファイル
 
 | ファイル | 用途 |
 | --- | --- |
-| `llms.txt` | LLM向けサイトマップ（[llmstxt.org](https://llmstxt.org/)） |
+| `llms.txt` | LLM向けサイトマップ |
 | `llms-full.txt` | サイト内容の要約テキスト |
 | `sitemap.xml` | 検索エンジン向け |
 | `robots.txt` | クロール方針 |
-
----
-
-## 今後の展望
-
-*   各プロジェクトの詳細ページ
-*   3DCGギャラリーの拡充
-*   コンタクトフォームのバックエンド連携
 
 ---
 

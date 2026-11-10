@@ -1,6 +1,6 @@
 # coffin299 — Full summary
 
-> AIプログラマー & 3DCGアーティスト coffin299（ごみぃ）のポートフォリオ全文要約。
+> AIプログラマー & 3DCGアーティスト coffin299（ごみぃ）のポートフォリオ全文要約。水没した図書館を背景にしたデジタルアーカイブ。
 
 ## Identity
 
@@ -9,6 +9,8 @@
 - Site: https://coffin299.net/
 - GitHub: https://github.com/coffin299
 - X: https://x.com/coffin299
+- Discord: https://discord.com/users/270446628622696449
+- BOOTH: https://coffin299.booth.pm/
 - YouTube: https://www.youtube.com/@coffin2999
 
 ## About
@@ -77,3 +79,4 @@ MikuMikuDanceを使ったキャラクターアニメーション作品。
 - GitHub: https://github.com/coffin299
 - X: https://x.com/coffin299
 - Discord: https://discord.com/users/270446628622696449
+- BOOTH: https://coffin299.booth.pm/
