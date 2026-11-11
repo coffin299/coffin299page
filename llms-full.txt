@@ -15,6 +15,7 @@
 - Favicon: https://coffin299.net/photos/icon.png
 - Profile: https://coffin299.net/photos/coffin299.gif
 - Share image: https://coffin299.net/photos/OGP.png
+- Share text: ごみぃ(coffin299)の肥溜め置き場
 
 ## About
 
@@ -87,7 +88,7 @@ MikuMikuDanceを使ったキャラクターアニメーション作品。
 ## Rendering
 
 - Far layer: assets/background_parallax.png
-- Near layer: assets/background_avator.png, seated on the stairs, using the file alpha
+- Near layer: assets/background_avator.png, hips locked to the stair in the far plate. Narrower desktop windows shrink the figure so it stays on that stair and inside the view. Phones keep a large cropped figure. Uses the file alpha
 - Fallback still: assets/background.png when Still, prefers-reduced-motion, a layer fails to load, or both WebGPU and WebGL fail
 - WebGPU uses Three.js r180 compute for the height field, bubbles, dust, plankton, and boids. The library plate is sampled inside the illustration so it stays recognizable, and the avatar is drawn after that pass so the figure stays sharp
 - Low quality reduces particle counts, resolution, and compute rate. WebGL keeps the same scenes with CPU updates and a single fog, distortion, and chromatic aberration pass

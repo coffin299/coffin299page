@@ -87,7 +87,7 @@ input {
     inset: -3%;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: calc(70% + var(--px) * 14px) calc(64% + var(--py) * 10px - var(--scroll) * 28px);
+    background-position: calc(70% + var(--px) * 8px) calc(64% + var(--py) * 6px - var(--scroll) * 16px);
     transform: scale(1.04);
 }
 
@@ -492,9 +492,9 @@ section[id] {
     }
 
     .world-photo {
-        background-position: 66% calc(56% - var(--scroll) * 12px);
-        transform: scale(1.32);
-        transform-origin: 66% 52%;
+        background-position: 80% calc(63% - var(--scroll) * 12px);
+        transform: scale(1.45);
+        transform-origin: 80% 50%;
     }
 
     .world-scrim {
@@ -522,6 +522,6 @@ section[id] {
 
 @media (max-width: 800px) and (prefers-reduced-motion: reduce) {
     .world-photo {
-        background-position: 66% 56%;
+        background-position: 80% 63%;
     }
 }

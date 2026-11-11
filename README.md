@@ -18,12 +18,12 @@
 *   **レスポンシブ**: PC とスマートフォン
 *   **Liquid Glass**: ナビ、ボタン、カードは半透明のガラス
 *   **水中の演出**: WebGPU のコンピュートとポストプロセス。使えない環境では WebGL。どちらも失敗した場合、または動きを減らす設定では `assets/background.png` の静止画
-*   **二層の背景**: `background_parallax.png` が奥、`background_avator.png` が階段の上。ポインタとスクロールで奥が大きく動く
+*   **二層の背景**: `background_parallax.png` が奥、`background_avator.png` が階段の上。腰は絵の段に固定する。窓を狭めると人物は段に付いたまま画面内へ縮み、スマホは大きく見切れてよい
 *   **品質切替**: ナビの Auto / Low / Still。Low は粒子数、解像度、コンピュート間隔を落とす
 *   **GitHub Pages**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
 *   **クリーンURL**: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`
 *   **SEO / LLM向け**: `sitemap.xml`、`robots.txt`、`llms.txt`、`llms-full.txt`、構造化データ
-*   **アイコンと OGP**: タブは `photos/icon.png`、プロフィールは `photos/coffin299.gif`、共有カードは `photos/OGP.png`
+*   **アイコンと OGP**: タブは `photos/icon.png`、プロフィールは `photos/coffin299.gif`、共有カードは `photos/OGP.png`。共有文言は「ごみぃ(coffin299)の肥溜め置き場」
 
 ---
 

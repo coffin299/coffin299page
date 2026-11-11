@@ -2,7 +2,7 @@
 
 import { createCaustics } from "./scene/caustics.js?v=22";
 import { createParticles } from "./scene/particles.js?v=34";
-import { createPhoto, loadPlates } from "./scene/photo.js?v=33";
+import { createPhoto, loadPlates } from "./scene/photo.js?v=41";
 import { createPost } from "./scene/post.js?v=23";
 import { motionAllowed, resolveTier, tierSettings } from "./scene/quality.js";
 import { loadRenderer, makeTarget } from "./scene/renderer.js";

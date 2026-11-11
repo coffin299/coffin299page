@@ -2,7 +2,7 @@
 
 > AIプログラマー & 3DCGアーティスト。水没した図書館を背景にしたポートフォリオ。
 
-coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開しています。正規URLは https://coffin299.net/ です。タブアイコンは https://coffin299.net/photos/icon.png 、プロフィールは https://coffin299.net/photos/coffin299.gif 、共有画像は https://coffin299.net/photos/OGP.png です。
+coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開しています。正規URLは https://coffin299.net/ です。タブアイコンは https://coffin299.net/photos/icon.png 、プロフィールは https://coffin299.net/photos/coffin299.gif 、共有画像は https://coffin299.net/photos/OGP.png 、共有文言は「ごみぃ(coffin299)の肥溜め置き場」です。
 
 背景は奥の図書室と透過アバターの二層です。WebGPU で波紋、コースティクス、光芒、泡、塵、プランクトン、魚群を描き、失敗時は WebGL、それも失敗したら一枚絵 `assets/background.png` に戻します。品質は Auto / Low / Still です。
 

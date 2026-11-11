@@ -3,13 +3,34 @@
 import { screenNode, WAVE_GLSL } from "./refraction.js";
 
 const SEAT_UV = { x: 0.57, y: 0.4 };
+// 背景テクスチャ上で、腰を乗せる段
+const STAIR_UV = { x: 0.8, y: 0.32 };
 const FALLBACK_POINT = { x: 0.66, y: 0.4 };
+// ポインタとスクロールで絵をずらす量。端いっぱいだとこの分だけ動けない
+const LOOK_X = 0.01;
+const LOOK_Y = 0.006;
+const SCROLL_Y = 0.016;
 
 function coverRepeat(viewAspect, imageAspect) {
     if (viewAspect > imageAspect) {
         return { x: 1, y: imageAspect / viewAspect };
     }
     return { x: viewAspect / imageAspect, y: 1 };
+}
+
+function reserveParallax(repeat) {
+    // 横も縦も、視差の最大量だけは端を残す。16:9 は横が埋まり左右が止まる
+    const needX = LOOK_X;
+    const needY = LOOK_Y + SCROLL_Y;
+    let x = repeat.x;
+    let y = repeat.y;
+    if ((1 - x) * 0.5 < needX) {
+        x = 1 - needX * 2;
+    }
+    if ((1 - y) * 0.5 < needY) {
+        y = 1 - needY * 2;
+    }
+    return { x: x, y: y };
 }
 
 function clampFocus(focus, repeat) {
@@ -126,12 +147,45 @@ function buildAvatarMaterial(THREE, mode, texture) {
     });
 }
 
-function seatScreen() {
-    if (window.matchMedia("(max-width: 800px)").matches) {
-        return { x: 0.74, y: 0.48 };
+function stairOnScreen(focus, repeat) {
+    // 段の画素が、今の切り抜きのどこに映るか
+    return {
+        x: (STAIR_UV.x - focus.x) / repeat.x + 0.5,
+        y: (STAIR_UV.y - focus.y) / repeat.y + 0.5
+    };
+}
+
+function clampScreen(value, min, max) {
+    // 収まる範囲が無いときは中央に置く
+    if (min > max) {
+        return (min + max) * 0.5;
     }
-    // 腰を右上の段へ、もう少しだけ寄せる
-    return { x: 0.86, y: 0.37 };
+    return Math.min(Math.max(value, min), max);
+}
+
+function fitDesktopSeat(aspect, repeat, avatarAspect) {
+    const desktopH = 1.2;
+    const viewW = aspect * 2;
+    // 16:9での横幅の割合を保ち、細い窓ではその分だけ縮む
+    const widthFraction = (desktopH * avatarAspect) / ((16 / 9) * 2);
+    const planeW = Math.min(desktopH * avatarAspect, viewW * widthFraction);
+    const planeH = planeW / avatarAspect;
+    const centered = clampFocus({ x: 0.5, y: 0.5 }, repeat);
+    const natural = stairOnScreen(centered, repeat);
+    // 腰を段に置いたまま、全身が画面の中に入る位置へ寄せる
+    const minX = (SEAT_UV.x * planeW) / viewW;
+    const maxX = 1 - ((1 - SEAT_UV.x) * planeW) / viewW;
+    const minY = (SEAT_UV.y * planeH) / 2;
+    const maxY = 1 - ((1 - SEAT_UV.y) * planeH) / 2;
+    const screen = {
+        x: clampScreen(natural.x, minX, maxX),
+        y: clampScreen(natural.y, minY, maxY)
+    };
+    const focus = clampFocus({
+        x: STAIR_UV.x - (screen.x - 0.5) * repeat.x,
+        y: STAIR_UV.y - (screen.y - 0.5) * repeat.y
+    }, repeat);
+    return { planeW: planeW, planeH: planeH, focus: focus };
 }
 
 function fallbackAim() {
@@ -180,25 +234,45 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
             const imageAspect = image.width / image.height;
             const mobile = window.matchMedia("(max-width: 800px)").matches;
             let repeat = coverRepeat(aspect, imageAspect);
-            if (mobile && !plates.layered) {
-                // 一枚絵のスマホは人物が主役になるよう少し寄る
-                repeat = { x: repeat.x * 0.8, y: repeat.y * 0.8 };
+            if (mobile) {
+                // スマホは階段のあたりを大きく映す。人物は見切れてもよい
+                const zoom = plates.layered ? 0.7 : 0.8;
+                repeat = { x: repeat.x * zoom, y: repeat.y * zoom };
             }
+            // 端まで使い切ると、その軸の視差がクランプで消える
+            repeat = reserveParallax(repeat);
             uniforms.uRepeat.value.set(repeat.x, repeat.y);
             if (plates.layered) {
-                focusBase.x = 0.5;
-                focusBase.y = mobile ? 0.46 : 0.42;
-                const fitted = clampFocus(focusBase, repeat);
-                focusBase.x = fitted.x;
-                focusBase.y = fitted.y;
+                if (mobile) {
+                    // 段が画面の右寄り中央に来るよう、切り抜きの中心を決める
+                    const aim = { x: 0.7, y: 0.5 };
+                    focusBase.x = STAIR_UV.x - (aim.x - 0.5) * repeat.x;
+                    focusBase.y = STAIR_UV.y - (aim.y - 0.5) * repeat.y;
+                }
+                const avatarAspect = plates.avatar.image.width / plates.avatar.image.height;
+                let planeW = 0;
+                let planeH = 0;
+                if (mobile) {
+                    const fitted = clampFocus(focusBase, repeat);
+                    focusBase.x = fitted.x;
+                    focusBase.y = fitted.y;
+                    // スマホは画面いっぱいに大きく出す
+                    planeH = 1.55;
+                    planeW = planeH * avatarAspect;
+                } else {
+                    // 窓を狭めても段に付いたまま、画面内に収まる大きさにする
+                    const fitted = fitDesktopSeat(aspect, repeat, avatarAspect);
+                    focusBase.x = fitted.focus.x;
+                    focusBase.y = fitted.focus.y;
+                    planeW = fitted.planeW;
+                    planeH = fitted.planeH;
+                }
                 uniforms.uFocus.value.set(focusBase.x, focusBase.y);
-                const planeH = mobile ? 1.55 : 1.2;
-                const planeW = planeH * (plates.avatar.image.width / plates.avatar.image.height);
-                const screen = seatScreen();
+                const screen = stairOnScreen(focusBase, repeat);
                 const seatX = (screen.x - 0.5) * 2 * aspect;
                 const seatY = (screen.y - 0.5) * 2;
                 avatar.scale.set(planeW, planeH, 1);
-                // テクスチャ上の腰が、画面上の階段位置に来るよう平面をずらす
+                // テクスチャ上の腰を、背景の段の画素に合わせる
                 base.x = seatX - (SEAT_UV.x - 0.5) * planeW;
                 base.y = seatY - (SEAT_UV.y - 0.5) * planeH;
             } else {
@@ -212,8 +286,8 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
             }
         },
         parallax: function (input) {
-            const shiftX = input.look.x * 0.018;
-            const shiftY = -input.look.y * 0.012 - input.scroll * 0.028;
+            const shiftX = input.look.x * LOOK_X;
+            const shiftY = -input.look.y * LOOK_Y - input.scroll * SCROLL_Y;
             const repeat = uniforms.uRepeat.value;
             // 毎フレーム基準位置から足し、絵の外にはみ出したら端で止める
             const next = clampFocus({ x: focusBase.x + shiftX, y: focusBase.y + shiftY }, repeat);
@@ -222,13 +296,13 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
                 uniforms.gpuFocus.value.copy(uniforms.uFocus.value);
             }
             if (avatar) {
-                // 奥が実際に動いた分だけ、同じ方向へ少し追従させる
+                // 奥が動いた分と同じだけ動かし、腰を段から離さない
                 const movedX = next.x - focusBase.x;
                 const movedY = next.y - focusBase.y;
                 const roomX = repeat.x > 0 ? -(movedX / repeat.x) * 2 * input.aspect : 0;
                 const roomY = repeat.y > 0 ? -(movedY / repeat.y) * 2 : 0;
-                avatar.position.x = base.x + roomX * 0.4;
-                avatar.position.y = base.y + roomY * 0.4;
+                avatar.position.x = base.x + roomX;
+                avatar.position.y = base.y + roomY;
             }
         },
         syncWave: function () {
