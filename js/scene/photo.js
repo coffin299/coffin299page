@@ -128,10 +128,10 @@ function buildAvatarMaterial(THREE, mode, texture) {
 
 function seatScreen() {
     if (window.matchMedia("(max-width: 800px)").matches) {
-        return { x: 0.54, y: 0.47 };
+        return { x: 0.57, y: 0.47 };
     }
-    // 腰を一段上、少し右の段に乗せる
-    return { x: 0.64, y: 0.35 };
+    // 腰を一段上、右寄りの段に乗せる
+    return { x: 0.68, y: 0.35 };
 }
 
 function fallbackAim() {
