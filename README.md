@@ -23,7 +23,7 @@
 *   **GitHub Pages**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
 *   **クリーンURL**: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`
 *   **SEO / LLM向け**: `sitemap.xml`、`robots.txt`、`llms.txt`、`llms-full.txt`、構造化データ
-*   **アイコンと OGP**: タブは `photos/icon.png`、プロフィールは `photos/coffin299.gif`、共有カードは `photos/OGP.png`。共有文言は「ごみぃ(coffin299)の肥溜め置き場」
+*   **アイコンと OGP**: タブは `photos/icon.png`、プロフィールは `photos/coffin299.gif`。Discord と Twitter のカードは `photos/ogp-card.jpg`（1200×630）。元絵は `photos/OGP.png`。共有タイトルは「ごみぃ(coffin299)の肥溜め置き場」
 
 ---
 

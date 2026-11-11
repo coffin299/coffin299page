@@ -14,8 +14,9 @@
 - YouTube: https://www.youtube.com/@coffin2999
 - Favicon: https://coffin299.net/photos/icon.png
 - Profile: https://coffin299.net/photos/coffin299.gif
-- Share image: https://coffin299.net/photos/OGP.png
-- Share text: ごみぃ(coffin299)の肥溜め置き場
+- Share card: https://coffin299.net/photos/ogp-card.jpg (1200x630 JPEG for Discord and Twitter)
+- Share source: https://coffin299.net/photos/OGP.png
+- Share title: ごみぃ(coffin299)の肥溜め置き場
 
 ## About
 
