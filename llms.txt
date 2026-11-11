@@ -15,6 +15,7 @@ coffin299（ごみぃ）の個人サイトです。GitHub Pages で公開して�
 
 ## Projects
 
+- [VRCast](https://github.com/coffin299/VRCast): メイン作品。VRChat のアバターを届ける実験。サイトは https://coffin299.github.io/VRCast/
 - [MOMOKA](https://github.com/coffin299/ProjectMOMOKA): オールインワン Discord Bot（LLM、音楽、画像生成、TTS）
 - [PLANA](https://github.com/coffin299/llmcord-JP-plana): LLM対話と多機能ユーティリティ Bot
 - [ARONA](https://github.com/coffin299/music-bot-arona): 簡易 Discord 音楽 Bot

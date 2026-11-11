@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolios coffin299 - Underwater Archive</title>
     <meta name="description" content="coffin299（ごみぃ）の作品集。Discord Bot開発、3DCGアニメーション、AI技術を活用したプロジェクトを紹介。">
-    <meta name="keywords" content="coffin299, ごみぃ, 作品集, Discord Bot, MOMOKA, PLANA, ARONA, 3DCG, MMD, VRChat">
+    <meta name="keywords" content="coffin299, ごみぃ, 作品集, VRCast, Discord Bot, MOMOKA, PLANA, ARONA, 3DCG, MMD, VRChat">
     <meta name="author" content="coffin299">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#041422">
@@ -63,12 +63,12 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="../../styles/styles.css?v=26">
-    <link rel="stylesheet" href="../../styles/portfolios.css">
+    <link rel="stylesheet" href="../../styles/styles.css?v=33">
+    <link rel="stylesheet" href="../../styles/portfolios.css?v=31">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body data-page="portfolios">
-    <div class="world" data-photo="../../assets/background.png" data-room="../../assets/background_parallax.png" data-avatar="../../assets/background_avator.png">
+    <div class="world" data-photo="../../assets/background.png" data-room="../../assets/background_parallax.png" data-avatar="../../assets/background_avator.png?v=2">
         <div class="world-photo" style="background-image: url('../../assets/background.png')"></div>
         <canvas id="world-canvas" class="world-canvas"></canvas>
         <div class="world-scrim"></div>
@@ -100,6 +100,17 @@
                 <p class="page-subtitle">AI技術を活用したプロジェクトと3DCG作品</p>
             </header>
             <section class="card-grid" data-reveal>
+                <article class="project-card project-card-main glass">
+                    <p class="card-kicker">Main / Virtual Worlds</p>
+                    <h3>VRCast</h3>
+                    <div class="project-tags"><span class="tag">VRChat</span><span class="tag">Streaming</span></div>
+                    <p>VRChat Avatar Streaming Application。アバターを仮想空間から届けるための実験です。</p>
+                    <div class="project-footer">
+                        <a class="project-link" href="https://github.com/coffin299/VRCast" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+                        <a class="project-link" href="https://deepwiki.com/coffin299/VRCast" target="_blank" rel="noopener noreferrer"><i class="fas fa-book"></i> DeepWiki</a>
+                        <a class="project-link" href="https://coffin299.github.io/VRCast/" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i> Website</a>
+                    </div>
+                </article>
                 <article class="project-card glass">
                     <p class="card-kicker">Discord Bot / AI Assistant</p>
                     <h3>PLANA</h3>
@@ -119,12 +130,6 @@
                         <a class="project-link" href="https://deepwiki.com/coffin299/llmcord-JP-plana" target="_blank" rel="noopener noreferrer"><i class="fas fa-book"></i> DeepWiki</a>
                         <a class="project-link" href="https://coffin299.github.io/llmcord-JP-plana" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i> Website</a>
                     </div>
-                </article>
-                <article class="project-card glass">
-                    <p class="card-kicker">Virtual Worlds</p>
-                    <h3>VRCast</h3>
-                    <div class="project-tags"><span class="tag">VRChat</span><span class="tag">Streaming</span></div>
-                    <p>VRChat Avatar Streaming Application。アバターを仮想空間から届けるための実験です。</p>
                 </article>
                 <article class="cg-card glass">
                     <p class="card-kicker">3D Modeling / VRChat / Character Rendering</p>
@@ -264,6 +269,6 @@
         </div>
     </main>
     <script src="../../js/app.js"></script>
-    <script type="module" src="../../js/scene.js?v=26"></script>
+    <script type="module" src="../../js/scene.js?v=33"></script>
 </body>
 </html>

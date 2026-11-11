@@ -8,6 +8,15 @@
     gap: 0.9rem;
 }
 
+.project-card-main {
+    grid-column: 1 / -1;
+    padding: 1.45rem 1.5rem 1.25rem;
+}
+
+.project-card-main h3 {
+    font-size: clamp(2.6rem, 5vw, 3.6rem);
+}
+
 .project-card,
 .archive-card,
 .tech-category,

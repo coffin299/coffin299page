@@ -270,26 +270,6 @@ main {
     animation: rise-in 0.9s ease both;
 }
 
-.eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin-bottom: 1.1rem;
-    color: var(--accent-strong);
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-}
-
-.live-dot {
-    width: 0.45rem;
-    height: 0.45rem;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
-    animation: pulse 2.8s ease-in-out infinite;
-}
-
 .hero h1,
 .page-title {
     font-family: var(--font-display);
@@ -471,16 +451,6 @@ section[id] {
     }
 }
 
-@keyframes pulse {
-    0%,
-    100% {
-        opacity: 0.4;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
 @media (max-width: 800px) {
     .nav-float {
         top: 0.45rem;
@@ -538,7 +508,6 @@ section[id] {
     }
 
     .hero-copy,
-    .live-dot,
     [data-reveal] {
         animation: none;
         opacity: 1;

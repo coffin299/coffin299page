@@ -2,7 +2,7 @@
 
 import { screenNode, WAVE_GLSL } from "./refraction.js";
 
-const SEAT_UV = { x: 0.68, y: 0.4 };
+const SEAT_UV = { x: 0.57, y: 0.4 };
 const FALLBACK_POINT = { x: 0.66, y: 0.4 };
 
 function coverRepeat(viewAspect, imageAspect) {
@@ -128,10 +128,10 @@ function buildAvatarMaterial(THREE, mode, texture) {
 
 function seatScreen() {
     if (window.matchMedia("(max-width: 800px)").matches) {
-        return { x: 0.61, y: 0.47 };
+        return { x: 0.74, y: 0.48 };
     }
-    // 腰を一段上、本棚側の段に乗せる
-    return { x: 0.73, y: 0.35 };
+    // 腰を右上の段へ、もう少しだけ寄せる
+    return { x: 0.86, y: 0.37 };
 }
 
 function fallbackAim() {

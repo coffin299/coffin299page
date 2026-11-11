@@ -34,6 +34,13 @@
 
 ## Portfolios
 
+### VRCast (featured)
+
+VRChat Avatar Streaming Application。アバターを仮想空間から届けるための実験です。
+- GitHub: https://github.com/coffin299/VRCast
+- DeepWiki: https://deepwiki.com/coffin299/VRCast
+- Website: https://coffin299.github.io/VRCast/
+
 ### MOMOKA (main)
 
 オールインワン Discord Bot。AIチャット、音楽再生、画像生成、TTS、ゲーム統計、リアルタイム通知を統合。

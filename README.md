@@ -44,7 +44,7 @@
 | --- | --- |
 | `/` | ヒーロー、About、作品、連絡先を縦にたどる |
 | `/pages/about/` | プロフィールとスキル |
-| `/pages/portfolios/` | 作品の全文 |
+| `/pages/portfolios/` | 作品の全文。メインは VRCast |
 | `/pages/contact/` | GitHub / X / Discord / BOOTH |
 
 BOOTH: <https://coffin299.booth.pm/>
