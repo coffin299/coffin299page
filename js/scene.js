@@ -1,13 +1,13 @@
 // 水中レンダラの入口。描画ループは DOM の更新から分けている。
 
-import { createCaustics } from "./scene/caustics.js?v=14";
+import { createCaustics } from "./scene/caustics.js?v=21";
 import { createParticles } from "./scene/particles.js?v=14";
-import { createPhoto, loadPlates } from "./scene/photo.js?v=14";
-import { createPost } from "./scene/post.js?v=20";
+import { createPhoto, loadPlates } from "./scene/photo.js?v=21";
+import { createPost } from "./scene/post.js?v=21";
 import { motionAllowed, resolveTier, tierSettings } from "./scene/quality.js";
 import { loadRenderer, makeTarget } from "./scene/renderer.js";
 import { createVolume } from "./scene/volume.js";
-import { createWaves } from "./scene/waves.js";
+import { createWaves } from "./scene/waves.js?v=21";
 
 let running = false;
 let activeTier = "";
@@ -148,7 +148,7 @@ async function boot() {
                 width: drawing.x,
                 height: drawing.y,
                 scroll: scroll,
-                impulse: Math.min(0.22, moved * 9),
+                impulse: Math.min(0.04, moved * 2.5),
                 idle: !pointer.active || now - pointer.movedAt > 1600,
                 look: look,
                 pointer: { x: pointer.sx, y: pointer.sy },

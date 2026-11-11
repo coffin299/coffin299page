@@ -7,7 +7,7 @@ function fillSeed(size) {
             const u = x / size;
             const v = y / size;
             // 0.5 を静止水面にし、最初から光の筋が出るように少し波打たせる
-            const h = 0.5 + Math.sin(u * Math.PI * 6) * Math.sin(v * Math.PI * 5) * 0.07;
+            const h = 0.5 + Math.sin(u * Math.PI * 6) * Math.sin(v * Math.PI * 5) * 0.02;
             const index = (y * size + x) * 2;
             data[index] = h;
             data[index + 1] = h;
@@ -61,12 +61,12 @@ function createWebGLWaves(THREE, size) {
             "  float upH = texture2D(uPrev, vUv + vec2(0.0, texel.y)).r;",
             "  float prevH = texture2D(uPrev, vUv).g;",
             "  float nextH = (leftH + rightH + downH + upH) * 0.5 - prevH;",
-            "  nextH = (nextH - 0.5) * 0.988 + 0.5;",
+            "  nextH = (nextH - 0.5) * 0.96 + 0.5;",
             "  vec2 delta = vUv - uPointer;",
             "  float hit = exp(-dot(delta, delta) * 420.0) * uImpulse;",
             "  vec2 dripAt = vec2(0.5 + sin(uTime * 0.35) * 0.18, 0.72 + cos(uTime * 0.27) * 0.08);",
             "  vec2 dripDelta = vUv - dripAt;",
-            "  float drip = exp(-dot(dripDelta, dripDelta) * 500.0) * 0.035;",
+            "  float drip = exp(-dot(dripDelta, dripDelta) * 500.0) * 0.006;",
             "  float height = clamp(nextH + hit + drip, 0.02, 0.98);",
             "  gl_FragColor = vec4(height, texture2D(uPrev, vUv).r, 0.0, 1.0);",
             "}"
@@ -83,7 +83,7 @@ function createWebGLWaves(THREE, size) {
     for (let i = 0; i < size * size; i += 1) {
         const u = (i % size) / size;
         const v = Math.floor(i / size) / size;
-        const h = Math.round((0.5 + Math.sin(u * Math.PI * 6) * Math.sin(v * Math.PI * 5) * 0.07) * 255);
+        const h = Math.round((0.5 + Math.sin(u * Math.PI * 6) * Math.sin(v * Math.PI * 5) * 0.02) * 255);
         bytes[i * 4] = h;
         bytes[i * 4 + 1] = h;
         bytes[i * 4 + 2] = 0;
@@ -151,7 +151,7 @@ function createWebGPUWaves(THREE, size) {
         const down = readAt(src, x, y.sub(1));
         const up = readAt(src, x, y.add(1));
         const nextH = left.x.add(right.x).add(down.x).add(up.x).mul(0.5).sub(center.y);
-        const damped = nextH.sub(0.5).mul(0.988).add(0.5);
+        const damped = nextH.sub(0.5).mul(0.96).add(0.5);
         const u = tsl.float(x).add(0.5).div(sizeF);
         const v = tsl.float(y).add(0.5).div(sizeF);
         const dx = u.sub(pointer.x);
@@ -161,7 +161,7 @@ function createWebGPUWaves(THREE, size) {
         const dripY = tsl.float(0.72).add(tsl.cos(time.mul(0.27)).mul(0.08));
         const ddx = u.sub(dripX);
         const ddy = v.sub(dripY);
-        const drip = tsl.exp(ddx.mul(ddx).add(ddy.mul(ddy)).mul(-500)).mul(0.035);
+        const drip = tsl.exp(ddx.mul(ddx).add(ddy.mul(ddy)).mul(-500)).mul(0.006);
         const height = tsl.clamp(damped.add(hit).add(drip), 0.02, 0.98);
         dst.element(index).assign(tsl.vec2(height, center.x));
     })().compute(size * size);

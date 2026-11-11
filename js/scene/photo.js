@@ -65,19 +65,19 @@ function buildRoomMaterial(THREE, mode, texture, waves, uniforms, layered) {
         if (waves.sample) {
             const grad = waveGradient(tsl, waves.sample, uvNode, waves.texel);
             if (layered) {
-                // 奥の図書室だけ高さ場で屈折させる
-                sampleUv = baseUv.add(grad.mul(0.45));
+                // 奥の図書室だけ、絵が割れない程度にわずかに屈折させる
+                sampleUv = baseUv.add(grad.mul(0.03));
             } else {
                 const delta = baseUv.sub(tsl.vec2(FALLBACK_POINT.x, FALLBACK_POINT.y)).div(tsl.vec2(0.16, 0.28));
                 const away = tsl.smoothstep(tsl.float(0.35), tsl.float(1.05), tsl.length(delta));
-                sampleUv = baseUv.add(grad.mul(0.16).mul(away));
+                sampleUv = baseUv.add(grad.mul(0.02).mul(away));
             }
         }
         const sampled = tsl.texture(texture, tsl.clamp(sampleUv, 0.001, 0.999));
         let color = sampled.rgb;
         if (waves.sample) {
             const light = causticAmount(tsl, waves.sample, uvNode, waves.texel);
-            color = color.add(tsl.vec3(0.35, 0.7, 0.85).mul(light).mul(0.22));
+            color = color.add(tsl.vec3(0.35, 0.7, 0.85).mul(light).mul(0.04));
         }
         material.colorNode = color;
         material.depthWrite = true;
@@ -109,9 +109,9 @@ function buildRoomMaterial(THREE, mode, texture, waves, uniforms, layered) {
             "    vec2 delta = (baseUv - vec2(0.66, 0.40)) / vec2(0.16, 0.28);",
             "    away = smoothstep(0.35, 1.05, length(delta));",
             "  }",
-            "  vec2 sampleUv = clamp(baseUv + grad * mix(0.22, 0.55, uLayered) * away, 0.001, 0.999);",
+            "  vec2 sampleUv = clamp(baseUv + grad * mix(0.02, 0.03, uLayered) * away, 0.001, 0.999);",
             "  vec3 color = texture2D(uMap, sampleUv).rgb;",
-            "  color += vec3(0.35, 0.70, 0.85) * causticAmount(vUv) * 0.22;",
+            "  color += vec3(0.35, 0.70, 0.85) * causticAmount(vUv) * 0.04;",
             "  gl_FragColor = vec4(color, 1.0);",
             "}"
         ].join("\n")
