@@ -2,11 +2,6 @@
 
 import { WAVE_GLSL } from "./refraction.js";
 
-function fogged(tsl, color, uv) {
-    const amount = tsl.float(1).sub(uv.y).mul(0.18).add(0.06);
-    return tsl.mix(color, tsl.vec3(0.02, 0.14, 0.24), amount);
-}
-
 export async function createPost(THREE, renderer, mode, tier, worldScene, camera, waves) {
     if (mode === "webgpu" && THREE.TSL) {
         try {
@@ -16,27 +11,9 @@ export async function createPost(THREE, renderer, mode, tier, worldScene, camera
             target.texture.wrapT = THREE.ClampToEdgeWrapping;
             const material = new THREE.MeshBasicNodeMaterial();
             const uv = tsl.uv();
-            // 画面全体をもう一度ずらすと図書室が二重になる。屈折は図書室メッシュ側だけ
-            const sampleUv = uv;
-            let color = tsl.texture(target.texture, sampleUv).rgb;
-            if (tier === "high") {
-                const center = sampleUv.sub(0.5);
-                const edge = tsl.length(center).mul(0.0016);
-                const red = tsl.texture(target.texture, tsl.clamp(sampleUv.add(center.mul(edge)), 0.001, 0.999)).r;
-                const blue = tsl.texture(target.texture, tsl.clamp(sampleUv.sub(center.mul(edge)), 0.001, 0.999)).b;
-                color = tsl.vec3(red, color.g, blue);
-                const glow = tsl.texture(target.texture, sampleUv).rgb;
-                // 明るい画素だけ足して、高しきい値のブルームにする
-                color = color.add(tsl.max(glow.sub(0.9), tsl.vec3(0, 0, 0)).mul(0.22));
-                const spread = tsl.smoothstep(tsl.float(0.35), tsl.float(1), uv.y).mul(0.00045);
-                const tap = function (x, y) {
-                    return tsl.texture(target.texture, tsl.clamp(sampleUv.add(tsl.vec2(x, y).mul(spread)), 0.001, 0.999)).rgb;
-                };
-                const blurred = tap(1, 0).add(tap(-1, 0)).add(tap(0, 1)).add(tap(0, -1)).add(color).div(5);
-                // 画面上だけ少し柔らかくし、階段側の人物は後からシャープに重ねる
-                color = tsl.mix(color, blurred, tsl.smoothstep(tsl.float(0.55), tsl.float(1), uv.y).mul(0.08));
-            }
-            material.colorNode = fogged(tsl, color, uv);
+            // 描画先テクスチャは上が逆なので、図書室が元絵と同じ向きになるよう戻す
+            const sampleUv = tsl.vec2(uv.x, tsl.float(1).sub(uv.y));
+            material.colorNode = tsl.texture(target.texture, sampleUv).rgb;
             material.depthTest = false;
             material.depthWrite = false;
             material.toneMapped = false;
@@ -93,17 +70,7 @@ export async function createPost(THREE, renderer, mode, tier, worldScene, camera
                 WAVE_GLSL,
                 "varying vec2 vUv;",
                 "void main() {",
-                "  vec2 grad = waveGradient(vUv);",
-                "  vec2 uv = vUv + grad * 0.002;",
-                "  vec2 center = uv - 0.5;",
-                "  float edge = length(center);",
-                "  float r = texture2D(uScene, uv + center * edge * 0.004).r;",
-                "  float g = texture2D(uScene, uv).g;",
-                "  float b = texture2D(uScene, uv - center * edge * 0.004).b;",
-                "  vec3 color = vec3(r, g, b);",
-                "  float fog = (1.0 - vUv.y) * 0.18 + 0.06;",
-                "  color = mix(color, vec3(0.02, 0.14, 0.24), fog);",
-                "  gl_FragColor = vec4(color, 1.0);",
+                "  gl_FragColor = texture2D(uScene, vUv);",
                 "}"
             ].join("\n")
         });

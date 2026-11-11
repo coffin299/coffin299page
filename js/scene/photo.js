@@ -1,6 +1,6 @@
 // 奥の図書室と、階段に座る人物。失敗時は一枚絵に戻す。
 
-import { causticAmount, screenNode, WAVE_GLSL, waveGradient } from "./refraction.js";
+import { screenNode, WAVE_GLSL } from "./refraction.js";
 
 const SEAT_UV = { x: 0.68, y: 0.4 };
 const FALLBACK_POINT = { x: 0.66, y: 0.4 };
@@ -12,10 +12,22 @@ function coverRepeat(viewAspect, imageAspect) {
     return { x: viewAspect / imageAspect, y: 1 };
 }
 
+function clampFocus(focus, repeat) {
+    // repeat が 1 未満の軸だけ動かせる。外へ出すと端の1行が帯になって伸びる
+    const halfX = repeat.x * 0.5;
+    const halfY = repeat.y * 0.5;
+    return {
+        x: Math.min(Math.max(focus.x, halfX), 1 - halfX),
+        y: Math.min(Math.max(focus.y, halfY), 1 - halfY)
+    };
+}
+
 function prepareTexture(THREE, texture) {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.minFilter = THREE.LinearFilter;
     texture.magFilter = THREE.LinearFilter;
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
     texture.generateMipmaps = false;
     return texture;
 }
@@ -61,25 +73,8 @@ function buildRoomMaterial(THREE, mode, texture, waves, uniforms, layered) {
         uniforms.gpuRepeat = repeat;
         uniforms.gpuFocus = focus;
         const baseUv = uvNode.sub(0.5).mul(repeat).add(focus);
-        let sampleUv = baseUv;
-        if (waves.sample) {
-            const grad = waveGradient(tsl, waves.sample, uvNode, waves.texel);
-            if (layered) {
-                // 奥の図書室だけ、絵が割れない程度にわずかに屈折させる
-                sampleUv = baseUv.add(grad.mul(0.03));
-            } else {
-                const delta = baseUv.sub(tsl.vec2(FALLBACK_POINT.x, FALLBACK_POINT.y)).div(tsl.vec2(0.16, 0.28));
-                const away = tsl.smoothstep(tsl.float(0.35), tsl.float(1.05), tsl.length(delta));
-                sampleUv = baseUv.add(grad.mul(0.02).mul(away));
-            }
-        }
-        const sampled = tsl.texture(texture, tsl.clamp(sampleUv, 0.001, 0.999));
-        let color = sampled.rgb;
-        if (waves.sample) {
-            const light = causticAmount(tsl, waves.sample, uvNode, waves.texel);
-            color = color.add(tsl.vec3(0.35, 0.7, 0.85).mul(light).mul(0.04));
-        }
-        material.colorNode = color;
+        // 高さ場で UV を動かすと図書室が二重に見える。絵はそのまま出す
+        material.colorNode = tsl.texture(texture, tsl.clamp(baseUv, 0.001, 0.999)).rgb;
         material.depthWrite = true;
         material.toneMapped = false;
         return material;
@@ -102,17 +97,8 @@ function buildRoomMaterial(THREE, mode, texture, waves, uniforms, layered) {
             WAVE_GLSL,
             "varying vec2 vUv;",
             "void main() {",
-            "  vec2 baseUv = (vUv - 0.5) * uRepeat + uFocus;",
-            "  vec2 grad = waveGradient(vUv);",
-            "  float away = 1.0;",
-            "  if (uLayered < 0.5) {",
-            "    vec2 delta = (baseUv - vec2(0.66, 0.40)) / vec2(0.16, 0.28);",
-            "    away = smoothstep(0.35, 1.05, length(delta));",
-            "  }",
-            "  vec2 sampleUv = clamp(baseUv + grad * mix(0.02, 0.03, uLayered) * away, 0.001, 0.999);",
-            "  vec3 color = texture2D(uMap, sampleUv).rgb;",
-            "  color += vec3(0.35, 0.70, 0.85) * causticAmount(vUv) * 0.04;",
-            "  gl_FragColor = vec4(color, 1.0);",
+            "  vec2 baseUv = clamp((vUv - 0.5) * uRepeat + uFocus, 0.001, 0.999);",
+            "  gl_FragColor = vec4(texture2D(uMap, baseUv).rgb, 1.0);",
             "}"
         ].join("\n")
     });
@@ -201,6 +187,9 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
             if (plates.layered) {
                 focusBase.x = 0.5;
                 focusBase.y = mobile ? 0.46 : 0.42;
+                const fitted = clampFocus(focusBase, repeat);
+                focusBase.x = fitted.x;
+                focusBase.y = fitted.y;
                 uniforms.uFocus.value.set(focusBase.x, focusBase.y);
                 const planeH = mobile ? 1.55 : 1.2;
                 const planeW = planeH * (plates.avatar.image.width / plates.avatar.image.height);
@@ -224,8 +213,10 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
         parallax: function (input) {
             const shiftX = input.look.x * 0.018;
             const shiftY = -input.look.y * 0.012 - input.scroll * 0.028;
-            // 毎フレーム基準位置から足し、視差が蓄積しないようにする
-            uniforms.uFocus.value.set(focusBase.x + shiftX, focusBase.y + shiftY);
+            const repeat = uniforms.uRepeat.value;
+            // 毎フレーム基準位置から足し、絵の外にはみ出したら端で止める
+            const next = clampFocus({ x: focusBase.x + shiftX, y: focusBase.y + shiftY }, repeat);
+            uniforms.uFocus.value.set(next.x, next.y);
             if (uniforms.gpuFocus) {
                 uniforms.gpuFocus.value.copy(uniforms.uFocus.value);
             }

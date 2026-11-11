@@ -10,7 +10,7 @@ function buildMaterial(THREE, mode, waves) {
         const light = causticAmount(tsl, waves.sample, uvNode, waves.texel);
         const fade = tsl.smoothstep(tsl.float(0.0), tsl.float(0.25), tsl.uv().y);
         material.colorNode = tsl.vec3(0.55, 0.9, 1.0).mul(light);
-        material.opacityNode = light.mul(fade).mul(0.07);
+        material.opacityNode = light.mul(fade).mul(0.03);
         material.transparent = true;
         material.depthWrite = false;
         material.blending = THREE.AdditiveBlending;
@@ -44,7 +44,7 @@ function buildMaterial(THREE, mode, waves) {
             "void main() {",
             "  float light = causticAmount(vScreen);",
             "  float fade = smoothstep(0.0, 0.25, vUv.y);",
-            "  gl_FragColor = vec4(0.55, 0.90, 1.0, light * fade * 0.07);",
+            "  gl_FragColor = vec4(0.55, 0.90, 1.0, light * fade * 0.03);",
             "}"
         ].join("\n")
     });
