@@ -257,13 +257,18 @@ function createCpuPoints(THREE, texture, scene, count, z, aspect, options) {
                 WAVE_GLSL,
                 "void main() {",
                 "  vec2 n = gl_PointCoord - 0.5;",
-                "  if (dot(n, n) > 0.25) discard;",
+                "  float dist = length(n);",
+                "  if (dist > 0.5) discard;",
+                "  float rim = smoothstep(0.28, 0.40, dist) * smoothstep(0.50, 0.40, dist);",
                 "  vec2 screenUv = gl_FragCoord.xy / uResolution;",
-                "  vec3 sceneColor = texture2D(uScene, screenUv + n * 0.04).rgb;",
-                "  float light = causticAmount(screenUv);",
-                "  float rim = smoothstep(0.5, 0.28, length(n));",
-                "  vec3 color = sceneColor * 0.72 + vec3(0.75, 0.93, 1.0) * rim * 0.35;",
-                "  gl_FragColor = vec4(color * (light * 0.35 + 0.8), 0.9);",
+                "  vec3 sceneColor = texture2D(uScene, screenUv + n * (0.006 + rim * 0.018)).rgb;",
+                "  float shine = smoothstep(0.16, 0.02, length(n - vec2(-0.12, 0.16)));",
+                "  float glint = smoothstep(0.08, 0.0, length(n - vec2(0.10, -0.08)));",
+                "  vec3 color = sceneColor * (1.0 - rim * 0.25);",
+                "  color += vec3(0.82, 0.95, 1.0) * rim * 0.9;",
+                "  color += vec3(1.0) * (shine * 0.85 + glint * 0.45);",
+                "  float alpha = smoothstep(0.50, 0.46, dist) * (rim * 0.75 + shine * 0.9 + 0.12);",
+                "  gl_FragColor = vec4(color, alpha);",
                 "}"
             ].join("\n")
         });
@@ -451,7 +456,7 @@ function gpuDrift(THREE, texture, scene, count, z, aspect, options, waves) {
         const self = positions.element(index);
         const phase = tsl.float(index).mul(0.17);
         const rise = tsl.float(options.rise ? 1 : 0);
-        let vx = tsl.sin(timeU.mul(0.4).add(phase)).mul(options.rise ? 0.01 : 0.035);
+        let vx = tsl.sin(timeU.mul(0.4).add(phase)).mul(options.rise ? 0.02 : 0.035);
         let vy = rise.mul(speed.element(index));
         vy = vy.add(tsl.cos(timeU.mul(0.3).add(phase)).mul(options.rise ? 0 : 0.02));
         const delta = self.xy.sub(pointer);
@@ -474,17 +479,22 @@ function gpuDrift(THREE, texture, scene, count, z, aspect, options, waves) {
     material.sizeAttenuation = false;
     if (options.refract && options.library) {
         const n = tsl.uv().sub(0.5);
+        const dist = tsl.length(n);
         const screen = typeof tsl.screenUV === "function" ? tsl.screenUV() : tsl.uv();
-        // 図書館を先に描いたテクスチャを法線分だけずらして泡の屈折にする
-        const sampled = tsl.texture(options.library.texture, screen.add(n.mul(0.035)));
-        const rim = tsl.smoothstep(tsl.float(0.5), tsl.float(0.28), tsl.length(n));
-        let color = sampled.rgb.mul(0.72).add(tsl.vec3(0.75, 0.93, 1).mul(rim.mul(0.35)));
-        if (waves.sample) {
-            const light = causticAmount(tsl, waves.sample, screen, waves.texel);
-            color = color.mul(light.mul(0.35).add(0.8));
-        }
+        // 縁だけ厚く屈折させ、中心は背景がそのまま見えるようにする
+        const rim = tsl.smoothstep(tsl.float(0.28), tsl.float(0.4), dist).mul(tsl.smoothstep(tsl.float(0.5), tsl.float(0.4), dist));
+        const bend = n.mul(tsl.float(0.006).add(rim.mul(0.018)));
+        const sampled = tsl.texture(options.library.texture, screen.add(bend));
+        const shine = tsl.smoothstep(tsl.float(0.16), tsl.float(0.02), tsl.length(n.sub(tsl.vec2(-0.12, 0.16))));
+        const glint = tsl.smoothstep(tsl.float(0.08), tsl.float(0), tsl.length(n.sub(tsl.vec2(0.1, -0.08))));
+        let color = sampled.rgb.mul(tsl.float(1).sub(rim.mul(0.25)));
+        color = color.add(tsl.vec3(0.82, 0.95, 1).mul(rim.mul(0.9)));
+        color = color.add(tsl.vec3(1, 1, 1).mul(shine.mul(0.85).add(glint.mul(0.45))));
         material.colorNode = color;
-        material.opacityNode = tsl.smoothstep(tsl.float(0.52), tsl.float(0.2), tsl.length(n)).mul(0.9);
+        const edge = tsl.smoothstep(tsl.float(0.5), tsl.float(0.46), dist);
+        material.opacityNode = edge.mul(rim.mul(0.75).add(shine.mul(0.9)).add(0.12));
+        const vary = tsl.hash(tsl.instanceIndex.add(8));
+        material.scaleNode = tsl.vec2(options.size, options.size).mul(tsl.float(0.55).add(vary.mul(0.75)));
     } else {
         const sampled = tsl.texture(texture);
         const pulse = options.pulse ? tsl.sin(timeU.mul(1.4).add(tsl.float(tsl.instanceIndex).mul(0.2))).mul(0.35).add(0.7) : tsl.float(1);

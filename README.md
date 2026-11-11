@@ -23,7 +23,7 @@
 *   **GitHub Pages**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`
 *   **クリーンURL**: `/` `/pages/about/` `/pages/portfolios/` `/pages/contact/`
 *   **SEO / LLM向け**: `sitemap.xml`、`robots.txt`、`llms.txt`、`llms-full.txt`、構造化データ
-*   **アイコンと OGP**: タブとプロフィールは `photos/icon.png`、共有カードは `photos/OGP.png`
+*   **アイコンと OGP**: タブは `photos/icon.png`、プロフィールは `photos/coffin299.gif`、共有カードは `photos/OGP.png`
 
 ---
 

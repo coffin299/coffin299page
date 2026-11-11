@@ -12,7 +12,8 @@
 - Discord: https://discord.com/users/270446628622696449
 - BOOTH: https://coffin299.booth.pm/
 - YouTube: https://www.youtube.com/@coffin2999
-- Icon: https://coffin299.net/photos/icon.png
+- Favicon: https://coffin299.net/photos/icon.png
+- Profile: https://coffin299.net/photos/coffin299.gif
 - Share image: https://coffin299.net/photos/OGP.png
 
 ## About
