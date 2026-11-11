@@ -128,10 +128,10 @@ function buildAvatarMaterial(THREE, mode, texture) {
 
 function seatScreen() {
     if (window.matchMedia("(max-width: 800px)").matches) {
-        return { x: 0.57, y: 0.47 };
+        return { x: 0.61, y: 0.47 };
     }
-    // 腰を一段上、右寄りの段に乗せる
-    return { x: 0.68, y: 0.35 };
+    // 腰を一段上、本棚側の段に乗せる
+    return { x: 0.73, y: 0.35 };
 }
 
 function fallbackAim() {
@@ -222,9 +222,13 @@ export function createPhoto(THREE, mode, plates, waves, worldScene, avatarScene)
                 uniforms.gpuFocus.value.copy(uniforms.uFocus.value);
             }
             if (avatar) {
-                // 奥より小さく動かし、階段から大きく外れないようにする
-                avatar.position.x = base.x + input.look.x * input.aspect * 0.012;
-                avatar.position.y = base.y - input.look.y * 0.008 - input.scroll * 0.012;
+                // 奥が実際に動いた分だけ、同じ方向へ少し追従させる
+                const movedX = next.x - focusBase.x;
+                const movedY = next.y - focusBase.y;
+                const roomX = repeat.x > 0 ? -(movedX / repeat.x) * 2 * input.aspect : 0;
+                const roomY = repeat.y > 0 ? -(movedY / repeat.y) * 2 : 0;
+                avatar.position.x = base.x + roomX * 0.4;
+                avatar.position.y = base.y + roomY * 0.4;
             }
         },
         syncWave: function () {
