@@ -18,6 +18,7 @@
 *   **レスポンシブ**: PC とスマートフォン
 *   **Liquid Glass**: ナビ、ボタン、カードは半透明のガラス
 *   **水中の演出**: WebGPU のコンピュートとポストプロセス。使えない環境では WebGL。どちらも失敗した場合、または動きを減らす設定では `assets/background.png` の静止画
+*   **ロード画面**: 水色の水面で `assets/loading1.png` と `loading2.png` を交互に出し、その場で歩く。WebGPU（使えなければ WebGL）と最初の描画が終わるまで表示し、失敗時と Still ではすぐ閉じる
 *   **二層の背景**: `background_parallax.png` が奥、`background_avator.png` が階段の上。腰は絵の段に固定する。窓を狭めると人物は段に付いたまま画面内へ縮み、スマホは大きく見切れてよい
 *   **品質切替**: ナビの Auto / Low / Still。Low は粒子数、解像度、コンピュート間隔を落とす
 *   **GitHub Pages**: Actions による自動デプロイ、カスタムドメイン `coffin299.net`

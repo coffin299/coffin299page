@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="dive-wait">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,11 +67,23 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="../../styles/styles.css?v=39">
+    <link rel="stylesheet" href="../../styles/styles.css?v=41">
     <link rel="stylesheet" href="../../styles/portfolios.css?v=31">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body data-page="portfolios">
+    <div class="dive-loader" id="dive-loader" role="status" aria-live="polite" aria-busy="true">
+        <div class="dive-glow" aria-hidden="true"></div>
+        <div class="dive-bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="dive-stage">
+            <div class="dive-walk" aria-hidden="true">
+                <img src="../../assets/loading1.png" alt="">
+                <img src="../../assets/loading2.png" alt="">
+            </div>
+            <p class="dive-mark">coffin<span>299</span></p>
+            <p class="dive-line"><span id="dive-status">水面をくぐっています</span><span class="dive-dots" aria-hidden="true"><i></i><i></i><i></i></span></p>
+        </div>
+    </div>
     <div class="world" data-photo="../../assets/background.png" data-room="../../assets/background_parallax.png" data-avatar="../../assets/background_avator.png?v=2">
         <div class="world-photo" style="background-image: url('../../assets/background.png')"></div>
         <canvas id="world-canvas" class="world-canvas"></canvas>
@@ -272,7 +284,7 @@
             </section>
         </div>
     </main>
-    <script src="../../js/app.js"></script>
-    <script type="module" src="../../js/scene.js?v=41"></script>
+    <script src="../../js/app.js?v=2"></script>
+    <script type="module" src="../../js/scene.js?v=42"></script>
 </body>
 </html>

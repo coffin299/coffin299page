@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" class="dive-wait">
 <head>
     <meta name="google-site-verification" content="STqpZioRe0Gg_BgeWLFgpXYZzfbKt-Ts0jZnscRFByg" />
     <meta charset="UTF-8">
@@ -81,13 +81,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles.css?v=39">
+    <link rel="stylesheet" href="styles/styles.css?v=41">
     <link rel="stylesheet" href="styles/about.css?v=2">
     <link rel="stylesheet" href="styles/portfolios.css?v=31">
     <link rel="stylesheet" href="styles/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body data-page="home">
+    <div class="dive-loader" id="dive-loader" role="status" aria-live="polite" aria-busy="true">
+        <div class="dive-glow" aria-hidden="true"></div>
+        <div class="dive-bubbles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="dive-stage">
+            <div class="dive-walk" aria-hidden="true">
+                <img src="assets/loading1.png" alt="">
+                <img src="assets/loading2.png" alt="">
+            </div>
+            <p class="dive-mark">coffin<span>299</span></p>
+            <p class="dive-line"><span id="dive-status">水面をくぐっています</span><span class="dive-dots" aria-hidden="true"><i></i><i></i><i></i></span></p>
+        </div>
+    </div>
     <a class="skip-link" href="#home">本文へ</a>
     <div class="world" data-photo="assets/background.png" data-room="assets/background_parallax.png" data-avatar="assets/background_avator.png?v=2">
         <div class="world-photo" style="background-image: url('assets/background.png')"></div>
@@ -329,7 +341,7 @@
             </div>
         </section>
     </main>
-    <script src="js/app.js"></script>
-    <script type="module" src="js/scene.js?v=41"></script>
+    <script src="js/app.js?v=2"></script>
+    <script type="module" src="js/scene.js?v=42"></script>
 </body>
 </html>

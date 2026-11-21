@@ -14,6 +14,36 @@ let activeTier = "";
 let frameId = 0;
 let disposeScene = null;
 let session = 0;
+let diveClosed = false;
+
+function diveStatus(text) {
+    // app.js の表示口を使い、無いときは要素へ直接書く
+    if (typeof window.setDiveStatus === "function") {
+        window.setDiveStatus(text);
+        return;
+    }
+    const status = document.getElementById("dive-status");
+    if (status && text) {
+        status.textContent = text;
+    }
+}
+
+function diveDone() {
+    // 最初の成功か、静止画へ戻したときだけ閉じる
+    if (diveClosed) {
+        return;
+    }
+    diveClosed = true;
+    if (typeof window.finishDiveLoader === "function") {
+        window.finishDiveLoader();
+        return;
+    }
+    const node = document.getElementById("dive-loader");
+    document.documentElement.classList.remove("dive-wait");
+    if (node) {
+        node.classList.add("is-gone");
+    }
+}
 
 function layerUrls(world) {
     if (!world.dataset.room && world.dataset.photo) {
@@ -31,6 +61,7 @@ async function boot() {
     const world = document.querySelector(".world");
     const canvas = document.getElementById("world-canvas");
     if (!world || !canvas || !world.dataset.photo) {
+        diveDone();
         return;
     }
     const id = ++session;
@@ -40,12 +71,19 @@ async function boot() {
     layerUrls(world);
     let loaded = null;
     try {
+        // WebGPU があれば先にそれを起こし、無ければ描画準備とだけ伝える
+        diveStatus(navigator.gpu ? "WebGPU を準備しています" : "描画を準備しています");
         loaded = await loadRenderer(canvas);
         if (id !== session || !motionAllowed()) {
             loaded.renderer.dispose();
             running = false;
+            // 品質を Still に切り替えたときはローダーを残さない
+            if (!motionAllowed()) {
+                diveDone();
+            }
             return;
         }
+        diveStatus(loaded.mode === "webgpu" ? "WebGPU で水を描いています" : "WebGL で水を描いています");
         const THREE = loaded.THREE;
         const renderer = loaded.renderer;
         const mode = loaded.mode;
@@ -63,8 +101,12 @@ async function boot() {
         if (id !== session || !motionAllowed()) {
             renderer.dispose();
             running = false;
+            if (!motionAllowed()) {
+                diveDone();
+            }
             return;
         }
+        diveStatus("図書室に光を通しています");
         const waves = createWaves(THREE, mode, settings.wave);
         const photo = createPhoto(THREE, mode, plates, waves, worldScene, avatarScene);
         const caustics = createCaustics(THREE, mode, waves, worldScene);
@@ -75,8 +117,12 @@ async function boot() {
         if (id !== session || !motionAllowed()) {
             renderer.dispose();
             running = false;
+            if (!motionAllowed()) {
+                diveDone();
+            }
             return;
         }
+        diveStatus("泡を浮かべています");
         const pointer = { x: 0, y: 0.2, sx: 0, sy: 0.2, active: false, movedAt: 0 };
         const look = { x: 0, y: 0 };
         const pointerUv = { x: 0.5, y: 0.5, lx: 0.5, ly: 0.5 };
@@ -218,8 +264,11 @@ async function boot() {
                 }
                 document.body.classList.add("has-scene");
                 document.body.classList.add("has-photo");
+                // 最初のフレームが描けたら水面のロードを下ろす
+                diveDone();
             } catch (error) {
                 console.warn("描画フレームに失敗したため静止画へ戻します", error);
+                diveDone();
                 const tagged = String(window.__sceneError || "");
                 if (!/^(waves|particles|library|post) /.test(tagged)) {
                     window.__sceneError = String(error && error.stack ? error.stack : error);
@@ -256,6 +305,7 @@ async function boot() {
         document.body.classList.remove("has-scene");
         document.body.classList.remove("has-photo");
         running = false;
+        diveDone();
     }
 }
 
@@ -271,6 +321,8 @@ function stop() {
 function sync() {
     if (!motionAllowed()) {
         stop();
+        // Still や動きの抑制ではキャンバスを待たず閉じる
+        diveDone();
         return;
     }
     const tier = resolveTier();

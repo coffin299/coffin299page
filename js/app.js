@@ -202,8 +202,44 @@ class Atmosphere {
     }
 }
 
+// 水色のロード画面。シーン側の準備完了か、時間切れで閉じる。
+function setDiveStatus(text) {
+    const status = document.getElementById("dive-status");
+    // 文言だけ差し替え、点々は隣の要素のまま残す
+    if (status && text) {
+        status.textContent = text;
+    }
+}
+
+function finishDiveLoader() {
+    const node = document.getElementById("dive-loader");
+    // スクロールロックは成功・失敗・静止画のどれでも外す
+    document.documentElement.classList.remove("dive-wait");
+    if (!node || node.classList.contains("is-gone")) {
+        return;
+    }
+    node.classList.add("is-gone");
+    node.setAttribute("aria-busy", "false");
+    node.setAttribute("aria-hidden", "true");
+    window.setTimeout(() => {
+        // フェードが終わってから DOM から外す
+        if (node.parentNode) {
+            node.remove();
+        }
+    }, 720);
+}
+
+window.setDiveStatus = setDiveStatus;
+window.finishDiveLoader = finishDiveLoader;
+
 function initApp() {
     document.documentElement.dataset.quality = readQuality();
+    // 静止画モードは水面を待たず、描画スクリプトが落ちても画面を塞がない
+    if (document.documentElement.dataset.quality === "still") {
+        finishDiveLoader();
+    } else {
+        window.setTimeout(finishDiveLoader, 25000);
+    }
     new QualityControl();
     new NavigationManager();
     const motion = new AnimationManager();
